@@ -7,6 +7,8 @@ public class LineSensor : MonoBehaviour
   
     public Transform parentTransform;
     public float distance;
+    public LineRenderer lineRenderer;
+    public bool useLineRenderer;
 
     public bool Detect(int direction)
     {      
@@ -18,12 +20,30 @@ public class LineSensor : MonoBehaviour
         origin = transform.position;
         RaycastHit2D[] hits = Physics2D.RaycastAll(origin, directionVector,
             distance, layerMask);
-        endPoint = origin + directionVector * direction*distance;
-        Debug.DrawLine(new Vector3(origin.x, origin.y), new Vector3(endPoint.x, endPoint.y),
-            Color.green, 0, true);        
+        endPoint = origin + directionVector*distance;
+        
+        DebugLine(origin, endPoint);
+
         bool detected = DetectOuterRing(hits);
         
         return detected;
+    }
+
+    private void DebugLine(Vector2 startPoint,Vector2 endPoint)
+    {
+        if (useLineRenderer)
+        {
+            lineRenderer.enabled = true;
+            Vector3[] positions = new Vector3[2];
+            positions[0] = new Vector3(startPoint.x, startPoint.y,-5);
+            positions[1] = new Vector3(endPoint.x, endPoint.y,-5);
+
+            lineRenderer.SetPositions(positions);
+        }
+        else
+        {
+            lineRenderer.enabled = false;
+        }
     }
 
     private Vector2 GetFacingVector()

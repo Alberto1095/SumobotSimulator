@@ -13,19 +13,33 @@ public class RobotController : MonoBehaviour
 
     public LineSensor frontRightLineSensor;
     public LineSensor frontLeftLineSensor;
-    public LineSensor backLineSensor;    
-    
+    public LineSensor backLineSensor;
+
+    public bool stop;
+
+    private void Start()
+    {
+       
+    }
 
     private void Update()
     {
-        CheckUserInput();
-        CheckLineSensors();
+        if (!stop)
+        {
+            CheckUserInput();
+            CheckLineSensors();
+        }
+      
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        Move();        
+        if (!stop)
+        {
+            Move();
+        }
+              
     }
 
     private void CheckUserInput()
@@ -56,8 +70,7 @@ public class RobotController : MonoBehaviour
     {
         switch (currentDirection)
         {
-            case RobotDirection.Up:
-                Debug.Log("MOVE UP");
+            case RobotDirection.Up:                
                 rigidbody.MovePosition(rigidbody.position + 
                     GetCurrentVelocity() * moveSpeed * Time.fixedDeltaTime);
                 break;
@@ -85,8 +98,14 @@ public class RobotController : MonoBehaviour
     private void CheckLineSensors()
     {
         bool detected  = frontRightLineSensor.Detect(1);
-        Debug.Log("DETECTED FRL: " + detected);
-        
+        //Debug.Log("DETECTED FRL: " + detected);
+
+        detected = frontLeftLineSensor.Detect(1);
+        //Debug.Log("DETECTED FLL: " + detected);
+
+        detected = backLineSensor.Detect(-1);
+        Debug.Log("DETECTED BL: " + detected);
+
     }     
 
 

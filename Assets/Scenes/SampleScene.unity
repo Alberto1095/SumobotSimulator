@@ -203,6 +203,137 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1021920337
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3635662072448132319, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: lineSensorDistance
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635662072448132319, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: moveSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635662072448132319, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: rotationSpeed
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635662072448132319, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: stop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5532687471568999390, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5532687471568999390, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 5532687471568999390, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5532687471568999390, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5532687471568999390, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5532687471568999390, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5532687471568999390, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5532687471568999390, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5532687471568999390, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5532687471568999390, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5532687471568999390, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5857106085868696774, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: m_LinearDrag
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5857106085868696774, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7490326383574491318, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: m_MotionVectors
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7490326383574491318, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: m_Parameters.alignment
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7490326383574491318, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: m_Positions.Array.data[1].y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7490326383574491318, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 528128299
+      objectReference: {fileID: 0}
+    - target: {fileID: 7490326383574491318, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7490326383574491318, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8779768624021758309, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: m_Name
+      value: Robot (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5827163028059119527, guid: 792c4e27ab9c7324990b5a34b249c25f, type: 3}
+    - {fileID: 6781670293521635422, guid: 792c4e27ab9c7324990b5a34b249c25f, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 792c4e27ab9c7324990b5a34b249c25f, type: 3}
 --- !u!1001 &2022514108348675750
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -243,22 +374,22 @@ PrefabInstance:
     - target: {fileID: 5532687471568999390, guid: 792c4e27ab9c7324990b5a34b249c25f,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5532687471568999390, guid: 792c4e27ab9c7324990b5a34b249c25f,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5532687471568999390, guid: 792c4e27ab9c7324990b5a34b249c25f,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0.2690582
       objectReference: {fileID: 0}
     - target: {fileID: 5532687471568999390, guid: 792c4e27ab9c7324990b5a34b249c25f,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.9631239
       objectReference: {fileID: 0}
     - target: {fileID: 5532687471568999390, guid: 792c4e27ab9c7324990b5a34b249c25f,
         type: 3}
@@ -278,11 +409,46 @@ PrefabInstance:
     - target: {fileID: 5532687471568999390, guid: 792c4e27ab9c7324990b5a34b249c25f,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: -31.216002
       objectReference: {fileID: 0}
     - target: {fileID: 5857106085868696774, guid: 792c4e27ab9c7324990b5a34b249c25f,
         type: 3}
       propertyPath: m_LinearDrag
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5857106085868696774, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7490326383574491318, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: m_MotionVectors
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7490326383574491318, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: m_Parameters.alignment
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7490326383574491318, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: m_Positions.Array.data[1].y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7490326383574491318, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 528128299
+      objectReference: {fileID: 0}
+    - target: {fileID: 7490326383574491318, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7490326383574491318, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: m_DynamicOccludee
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8779768624021758309, guid: 792c4e27ab9c7324990b5a34b249c25f,

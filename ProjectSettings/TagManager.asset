@@ -47,3 +47,6 @@ TagManager:
   - name: Robot
     uniqueID: 487845127
     locked: 0
+  - name: Rays
+    uniqueID: 528128299
+    locked: 0
