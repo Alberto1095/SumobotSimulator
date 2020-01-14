@@ -15,6 +15,10 @@ public class RobotController : MonoBehaviour
     public LineSensor frontLeftLineSensor;
     public LineSensor backLineSensor;
 
+    public DistanceSensor frontDistanseSensor;
+    public DistanceSensor leftDistanseSensor;
+    public DistanceSensor rightDistanseSensor;
+
     public bool stop;
 
     private void Start()
@@ -28,6 +32,7 @@ public class RobotController : MonoBehaviour
         {
             CheckUserInput();
             CheckLineSensors();
+            CheckDistanceSensors();
         }
       
     }
@@ -97,16 +102,30 @@ public class RobotController : MonoBehaviour
 
     private void CheckLineSensors()
     {
-        bool detected  = frontRightLineSensor.Detect(1);
+        bool detected  = frontRightLineSensor.Detect();
         //Debug.Log("DETECTED FRL: " + detected);
 
-        detected = frontLeftLineSensor.Detect(1);
+        detected = frontLeftLineSensor.Detect();
         //Debug.Log("DETECTED FLL: " + detected);
 
-        detected = backLineSensor.Detect(-1);
-        Debug.Log("DETECTED BL: " + detected);
+        detected = backLineSensor.Detect();
+        //Debug.Log("DETECTED BL: " + detected);
 
-    }     
+    }
+
+    private void CheckDistanceSensors()
+    {
+        bool detected;
+
+        detected = frontDistanseSensor.Detect();
+        //Debug.Log("DETECTED FDS: " + detected);
+
+        detected = leftDistanseSensor.Detect();
+        //Debug.Log("DETECTEF LDS: " + detected);
+
+        detected = rightDistanseSensor.Detect();
+        //Debug.Log("DETECTEF RDS: " + detected);
+    }
 
 
     private void OnTriggerEnter2D(Collider2D collision)

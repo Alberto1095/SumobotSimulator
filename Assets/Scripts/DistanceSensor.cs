@@ -2,20 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LineSensor : MonoBehaviour
-{   
-  
+public class DistanceSensor : MonoBehaviour
+{     
     public Transform parentTransform;
+    public float rotation;
     public float distance;
-    public int direction;
     public LineRenderer lineRenderer;
-    public bool useLineRenderer;
-   
+    public bool useLineRenderer;   
 
     public bool Detect()
     {      
-        Vector2 directionVector = GetFacingVector() * direction;        
-        int layerMask = LayerMask.GetMask("Interior", "Exterior");
+        Vector2 directionVector = RotateVector(GetFacingVector(),rotation);        
+        int layerMask = LayerMask.GetMask("Robot");
         Vector2 origin;
         Vector2 endPoint;
 
@@ -26,10 +24,16 @@ public class LineSensor : MonoBehaviour
         
         DebugLine(origin, endPoint);
 
-        bool detected = DetectOuterRing(hits);
+        bool detected = DetectEnemy(hits);
         
         return detected;
     }
+
+    private Vector2 RotateVector(Vector2 v, float aDegree)
+    {
+        return Quaternion.Euler(0, 0, aDegree) * v;
+    }
+
 
     private void DebugLine(Vector2 startPoint,Vector2 endPoint)
     {
@@ -54,23 +58,19 @@ public class LineSensor : MonoBehaviour
         return forwardVector;
     }
 
-    private bool DetectOuterRing(RaycastHit2D[] hits)
+    private bool DetectEnemy(RaycastHit2D[] hits)
     {
-
-        bool detectedInnerRing = false;
-        bool detectedOuterRing = false;
+        bool detectedEnemy = false;      
         foreach (RaycastHit2D hit in hits)
-        {
-            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Interior"))
+        {           
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Robot") 
+                && hit.collider.gameObject != parentTransform.gameObject)
             {
-                detectedInnerRing = true;
+                detectedEnemy = true;
             }
-            else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Exterior"))
-            {
-                detectedOuterRing = true;
-            }
+            
         }
 
-        return detectedOuterRing && !detectedInnerRing;
+        return detectedEnemy;
     }
 }
