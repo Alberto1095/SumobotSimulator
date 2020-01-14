@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RobotController : MonoBehaviour
+public class RobotController : IADrivenObject
 {
     public Rigidbody2D rigidbody;
 
@@ -23,6 +23,7 @@ public class RobotController : MonoBehaviour
     public DistanceSensor rightDistanseSensor;
 
     public bool stop;
+    public bool useIA;
 
     private void Start()
     {
@@ -44,9 +45,7 @@ public class RobotController : MonoBehaviour
     {
         if (!stop)
         {
-            CheckUserInput();
-            CheckLineSensors();
-            CheckDistanceSensors();
+            UpdateSumobot();
         }
       
     }
@@ -59,6 +58,19 @@ public class RobotController : MonoBehaviour
             Move();
         }
               
+    }
+
+    private void UpdateSumobot()
+    {
+        if (useIA)
+        {
+            //TODO Use waittime to execute in cycles
+            ExecuteIA();
+        }
+        else
+        {
+            CheckUserInput();
+        }
     }
 
     private void CheckUserInput()
@@ -112,34 +124,7 @@ public class RobotController : MonoBehaviour
     {
         Vector2 forwardVector = new Vector2(transform.up.x, transform.up.y);        
         return forwardVector;
-    }    
-
-    private void CheckLineSensors()
-    {
-        bool detected  = frontRightLineSensor.Detect();
-        //Debug.Log("DETECTED FRL: " + detected);
-
-        detected = frontLeftLineSensor.Detect();
-        //Debug.Log("DETECTED FLL: " + detected);
-
-        detected = backLineSensor.Detect();
-        //Debug.Log("DETECTED BL: " + detected);
-
-    }
-
-    private void CheckDistanceSensors()
-    {
-        bool detected;
-
-        detected = frontDistanseSensor.Detect();
-        //Debug.Log("DETECTED FDS: " + detected);
-
-        detected = leftDistanseSensor.Detect();
-        //Debug.Log("DETECTEF LDS: " + detected);
-
-        detected = rightDistanseSensor.Detect();
-        //Debug.Log("DETECTEF RDS: " + detected);
-    }
+    }     
 
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -152,4 +137,45 @@ public class RobotController : MonoBehaviour
         Debug.Log("COLISION EXIT: " + collision.gameObject.name);
     }
 
+    public override void StartNetwork()
+    {
+            
+    }
+
+    public override float GetFitness()
+    {
+        return lifetime*lifetimeWeight + win*winWeight + enemyColisions*enemyCollisionsWeight;
+    }
+
+    public override void ExecuteIA()
+    {
+        float[] outputs = neuralNetwork.CalculateOutput(GetInputs());
+        float minThreshold = 0.4;
+
+        //Decide which direction move
+        float moveUp = outputs[0];
+        float moveDown = outputs[1];
+        float turnRight = outputs[2];
+        float turnLeft = outputs[3];
+        float stop = outputs[4];
+
+        //Select one random from the ones with output higher than minimun threshold
+       
+
+
+    }
+
+    public override float[] GetInputs()
+    {
+        float[] list = new float[6];
+        list[0] = frontDistanseSensor.Detect() ? 1 : 0;
+        list[1] = rightDistanseSensor.Detect() ? 1 : 0;
+        list[2] = leftDistanseSensor.Detect() ? 1 : 0;
+
+        list[3] = frontRightLineSensor.Detect() ? 1 : 0;
+        list[4] = frontLeftLineSensor.Detect() ? 1 : 0;
+        list[5] = backLineSensor.Detect() ? 1 : 0;
+
+        return list;
+    }
 }
