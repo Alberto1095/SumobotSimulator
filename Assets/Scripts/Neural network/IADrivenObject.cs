@@ -6,20 +6,30 @@ public abstract class IADrivenObject : MonoBehaviour
 {
     //Variables for fitness calculation
     protected float lifetime;
-    protected static float lifetimeWeight = 3;
+    public float lifetimeWeight;
     protected int win;
-    protected static float winWeight = 2;
+    public float winWeight;
     protected int enemyColisions;
-    protected static float enemyCollisionsWeight = 5;
+    public float enemyCollisionsWeight;
 
     protected NeuralNetwork neuralNetwork;
-    
+    protected float lastUpdateTime;
+    public float updateWaitTime;  
 
-    public float updateWaitTime;    
+    protected bool CanUpdateIA()
+    {
+        float elapsed = Time.time - lastUpdateTime;
+        if(elapsed > updateWaitTime)
+        {
+            lastUpdateTime = Time.time;
+            return true;
+        }
+        return false;
+    }
 
-
-    public abstract void StartNetwork();
+    public abstract void StartNetwork(NeuralNetwork nn);
     public abstract float GetFitness();
     public abstract void ExecuteIA();
     public abstract float[] GetInputs();
+    public abstract List<float> GetEvaluation();
 }

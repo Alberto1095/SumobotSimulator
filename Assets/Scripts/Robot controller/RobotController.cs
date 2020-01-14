@@ -22,50 +22,62 @@ public class RobotController : IADrivenObject
     public DistanceSensor leftDistanseSensor;
     public DistanceSensor rightDistanseSensor;
 
-    public bool stop;
+    public bool useDebugLines;
+    public bool enable;
     public bool useIA;
 
     private void Start()
     {
+        currentDirection = RobotDirection.Stop;
+        lastUpdateTime = -1000;
         SetSensorValues();       
     }
 
     private void SetSensorValues()
     {
+
         frontDistanseSensor.distance = distanceSensorDistance;
+        frontDistanseSensor.useLineRenderer = useDebugLines;
         leftDistanseSensor.distance = distanceSensorDistance;
+        leftDistanseSensor.useLineRenderer = useDebugLines;
         rightDistanseSensor.distance = distanceSensorDistance;
+        rightDistanseSensor.useLineRenderer = useDebugLines;
 
         frontRightLineSensor.distance = lineSensorDistance;
+        frontRightLineSensor.useLineRenderer = useDebugLines;
         frontLeftLineSensor.distance = lineSensorDistance;
+        frontLeftLineSensor.useLineRenderer = useDebugLines;
         backLineSensor.distance = lineSensorDistance;
+        backLineSensor.useLineRenderer = useDebugLines;
     }
 
     private void Update()
     {
-        if (!stop)
+        if (enable)
         {
             UpdateSumobot();
-        }
-      
+        }      
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (!stop)
+        if (enable)
         {
             Move();
-        }
-              
+        }              
     }
 
     private void UpdateSumobot()
     {
         if (useIA)
         {
-            //TODO Use waittime to execute in cycles
-            ExecuteIA();
+            if (CanUpdateIA())
+            {
+                Debug.Log("UPDATE IA");
+                ExecuteIA();
+            }
+           
         }
         else
         {
@@ -125,21 +137,21 @@ public class RobotController : IADrivenObject
         Vector2 forwardVector = new Vector2(transform.up.x, transform.up.y);        
         return forwardVector;
     }     
-
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {       
-        Debug.Log("COLISION ENTER: " + collision.gameObject.name );        
-    }
+   
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         Debug.Log("COLISION EXIT: " + collision.gameObject.name);
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Exterior"))
+        {
+            enable = false;
+        }
     }
 
-    public override void StartNetwork()
+    public override void StartNetwork(NeuralNetwork nn)
     {
-            
+        this.neuralNetwork = nn;
+        this.useIA = true;
     }
 
     public override float GetFitness()
@@ -149,20 +161,55 @@ public class RobotController : IADrivenObject
 
     public override void ExecuteIA()
     {
-        float[] outputs = neuralNetwork.CalculateOutput(GetInputs());
-        float minThreshold = 0.4;
+        if(neuralNetwork != null)
+        {
+            float[] outputs = neuralNetwork.CalculateOutput(GetInputs());
+            float minThreshold = 0.4f;
 
-        //Decide which direction move
-        float moveUp = outputs[0];
-        float moveDown = outputs[1];
-        float turnRight = outputs[2];
-        float turnLeft = outputs[3];
-        float stop = outputs[4];
+            //Decide which direction move
+            //Select one random from the ones with output higher than minimun threshold
+            List<int> list = new List<int>();
 
-        //Select one random from the ones with output higher than minimun threshold
-       
+            for (int i = 0; i < outputs.Length; i++)
+            {
+                if (outputs[i] >= minThreshold)
+                {
+                    list.Add(i);
+                }
+            }
 
+            int outputSelected;
+            int randomIndex;
+            if (list.Count > 0)
+            {
+                randomIndex = Random.Range(0, list.Count - 1);
+                outputSelected = list[randomIndex];
+            }
+            else
+            {
+                outputSelected = Random.Range(0, outputs.Length-1);                
+            }            
 
+            switch (outputSelected)
+            {
+                case 0:
+                    currentDirection = RobotDirection.Up;
+                    break;
+                case 1:
+                    currentDirection = RobotDirection.Down;
+                    break;
+                case 2:
+                    currentDirection = RobotDirection.Right;
+                    break;
+                case 3:
+                    currentDirection = RobotDirection.Left;
+                    break;
+                case 4:
+                    currentDirection = RobotDirection.Stop;
+                    break;
+            }
+        }
+        
     }
 
     public override float[] GetInputs()
@@ -177,5 +224,10 @@ public class RobotController : IADrivenObject
         list[5] = backLineSensor.Detect() ? 1 : 0;
 
         return list;
+    }
+
+    public override List<float> GetEvaluation()
+    {
+        return neuralNetwork.GetWeights();
     }
 }

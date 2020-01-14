@@ -153,18 +153,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a2561ee540ad4b429e64ca38610af2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lifetimeWeight: 3
+  winWeight: 2
+  enemyCollisionsWeight: 5
+  updateWaitTime: 0.1
   rigidbody: {fileID: 5857106085868696774}
-  moveSpeed: 7
-  rotationSpeed: 250
-  lineSensorDistance: 0
-  distanceSensorDistance: 0
+  moveSpeed: 3
+  rotationSpeed: 100
+  lineSensorDistance: 0.1
+  distanceSensorDistance: 6
   frontRightLineSensor: {fileID: 6777306114588448448}
   frontLeftLineSensor: {fileID: 8895978701658805946}
   backLineSensor: {fileID: 3964805751092197931}
   frontDistanseSensor: {fileID: 3186954773993445349}
   leftDistanseSensor: {fileID: 6126553293528501782}
   rightDistanseSensor: {fileID: 1683981601075722168}
-  stop: 0
+  enable: 0
+  useIA: 0
 --- !u!61 &4365804362420320853
 BoxCollider2D:
   m_ObjectHideFlags: 0
