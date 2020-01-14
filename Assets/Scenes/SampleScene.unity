@@ -210,6 +210,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3635662072448132319, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: lineSensorDistance
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635662072448132319, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: moveSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635662072448132319, guid: 792c4e27ab9c7324990b5a34b249c25f,
+        type: 3}
+      propertyPath: rotationSpeed
+      value: 250
+      objectReference: {fileID: 0}
     - target: {fileID: 5532687471568999390, guid: 792c4e27ab9c7324990b5a34b249c25f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -294,6 +309,16 @@ PrefabInstance:
     - target: {fileID: 3645943014441929968, guid: 1079a57257115df41b537114bb24bd77,
         type: 3}
       propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5922587983282725556, guid: 1079a57257115df41b537114bb24bd77,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1143552391
+      objectReference: {fileID: 0}
+    - target: {fileID: 5922587983282725556, guid: 1079a57257115df41b537114bb24bd77,
+        type: 3}
+      propertyPath: m_SortingLayer
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6204319838490006305, guid: 1079a57257115df41b537114bb24bd77,
