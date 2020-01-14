@@ -39,6 +39,7 @@ public class Neuron
         for (int i = 0; i < numberOfInputs + 1; i++)
         {
             num = (float)(min + Random.value*(max - min));
+            Debug.Log("ADDING RANDOM WEIGH: " + num);
             weights.Insert(i, num);
         }
     }
@@ -53,20 +54,28 @@ public class Neuron
 		//Add bias value
 		f += weights[weights.Count - 1];
 
+        float salida = 0;
         //Activation function
         if (function == ActivationFunction.Relu)
         {
             //ReLU
             if (f < 0){
-                f = 0;
+               salida = 0;
+            }
+            else
+            {
+               salida = f;
             }
         }
         else if (function == ActivationFunction.Sigmoid)
         {
             //Sigmoid
-            f = 1 / (1 + Mathf.Exp(-1 * f));
+            salida = 1 / (1 + Mathf.Exp(-1 * f));
+        }else if(function == ActivationFunction.Lineal)
+        {
+            salida = f;
         }
 
-        return f;
+        return salida;
     }
 }
