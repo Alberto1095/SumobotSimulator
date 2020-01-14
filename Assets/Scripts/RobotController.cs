@@ -5,8 +5,11 @@ using UnityEngine;
 public class RobotController : MonoBehaviour
 {
     public Rigidbody2D rigidbody;
+
     public float moveSpeed;
-    public float rotationSpeed;
+    public float rotationSpeed;   
+    public float lineSensorDistance;    
+    public float distanceSensorDistance;   
 
     public enum RobotDirection { Up, Down, Left, Right,Stop };
     private RobotDirection currentDirection;
@@ -23,7 +26,18 @@ public class RobotController : MonoBehaviour
 
     private void Start()
     {
-       
+        SetSensorValues();       
+    }
+
+    private void SetSensorValues()
+    {
+        frontDistanseSensor.distance = distanceSensorDistance;
+        leftDistanseSensor.distance = distanceSensorDistance;
+        rightDistanseSensor.distance = distanceSensorDistance;
+
+        frontRightLineSensor.distance = lineSensorDistance;
+        frontLeftLineSensor.distance = lineSensorDistance;
+        backLineSensor.distance = lineSensorDistance;
     }
 
     private void Update()
