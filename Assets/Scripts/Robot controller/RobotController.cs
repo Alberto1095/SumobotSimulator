@@ -7,9 +7,7 @@ public class RobotController : IADrivenObject
     public Rigidbody2D rigidbody;
 
     public float moveSpeed;
-    public float rotationSpeed;   
-    public float lineSensorDistance;    
-    public float distanceSensorDistance;   
+    public float rotationSpeed;    
 
     public enum RobotDirection { Up, Down, Left, Right,Stop };
     private RobotDirection currentDirection;
@@ -29,27 +27,9 @@ public class RobotController : IADrivenObject
     private void Start()
     {
         currentDirection = RobotDirection.Stop;
-        lastUpdateTime = -1000;
-        SetSensorValues();       
+        lastUpdateTime = -1000;             
     }
-
-    private void SetSensorValues()
-    {
-
-        frontDistanseSensor.distance = distanceSensorDistance;
-        frontDistanseSensor.useLineRenderer = useDebugLines;
-        leftDistanseSensor.distance = distanceSensorDistance;
-        leftDistanseSensor.useLineRenderer = useDebugLines;
-        rightDistanseSensor.distance = distanceSensorDistance;
-        rightDistanseSensor.useLineRenderer = useDebugLines;
-
-        frontRightLineSensor.distance = lineSensorDistance;
-        frontRightLineSensor.useLineRenderer = useDebugLines;
-        frontLeftLineSensor.distance = lineSensorDistance;
-        frontLeftLineSensor.useLineRenderer = useDebugLines;
-        backLineSensor.distance = lineSensorDistance;
-        backLineSensor.useLineRenderer = useDebugLines;
-    }
+    
 
     private void Update()
     {

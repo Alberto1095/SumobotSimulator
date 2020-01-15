@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MenuInicialController : MonoBehaviour
+public class StartingMenuController : MonoBehaviour
 {
     public GameObject panel;
 
-    public static MenuInicialController Instance = null;
+    public static StartingMenuController Instance = null;
 
     // Initialize the singleton instance.
     private void Awake()
