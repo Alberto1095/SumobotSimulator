@@ -5,7 +5,6 @@ using UnityEngine;
 public class GeneticEvolutionConfiguration 
 {
    
-
     public GeneticEvolutionConfiguration()
     {
 
