@@ -1154,7 +1154,7 @@ GameObject:
   - component: {fileID: 2138867938657012003}
   - component: {fileID: 2138867938657012001}
   m_Layer: 5
-  m_Name: UITrainingMenuTest 1
+  m_Name: UITrainingMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
