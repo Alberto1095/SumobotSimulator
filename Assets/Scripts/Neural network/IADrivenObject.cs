@@ -5,8 +5,6 @@ using UnityEngine;
 public abstract class IADrivenObject : MonoBehaviour
 {
     //Variables for fitness calculation
-    protected float lifetime;
-    public float lifetimeWeight;
     protected int win;
     public float winWeight;
     protected int enemyColisions;
@@ -27,8 +25,13 @@ public abstract class IADrivenObject : MonoBehaviour
         return false;
     }
 
-    public abstract void StartNetwork(NeuralNetwork nn);
-    public abstract float GetFitness();
+    public void StartNetwork(NeuralNetworkConfiguration config) {
+        neuralNetwork = new NeuralNetwork(config);
+    }
+    public float GetFitness()
+    {
+        return win * winWeight + enemyColisions * enemyCollisionsWeight;
+    }
     public abstract void ExecuteIA();
     public abstract float[] GetInputs();
     public abstract List<float> GetEvaluation();

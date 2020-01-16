@@ -10,7 +10,7 @@ public class LineSensor : MonoBehaviour
     public int direction;
     public LineRenderer lineRenderer;
     public bool useLineRenderer;
-   
+    public bool lastValueRead;
 
     public bool Detect()
     {      
@@ -70,7 +70,7 @@ public class LineSensor : MonoBehaviour
                 detectedOuterRing = true;
             }
         }
-
+        lastValueRead = detectedOuterRing && !detectedInnerRing;
         return detectedOuterRing && !detectedInnerRing;
     }
 }

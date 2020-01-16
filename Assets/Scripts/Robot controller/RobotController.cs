@@ -7,7 +7,19 @@ public class RobotController : IADrivenObject
     public Rigidbody2D rigidbody;
 
     public float moveSpeed;
-    public float rotationSpeed;    
+    public float rotationSpeed;
+
+    public float lineSensorDistance;
+    public float distanceSensorDistance;
+
+    public bool useFrontDistanceSensor;
+    public bool useLeftDistanceSensor;
+    public bool useRightDistanceSensor;
+
+    public bool useFrontRightLineSensor;
+    public bool useFrontLeftLineSensor;
+    public bool useFrontLineSensor;
+    public bool useBackLineSensor;
 
     public enum RobotDirection { Up, Down, Left, Right,Stop };
     private RobotDirection currentDirection;
@@ -15,6 +27,7 @@ public class RobotController : IADrivenObject
     public LineSensor frontRightLineSensor;
     public LineSensor frontLeftLineSensor;
     public LineSensor backLineSensor;
+    public LineSensor frontLineSensor;
 
     public DistanceSensor frontDistanseSensor;
     public DistanceSensor leftDistanseSensor;
@@ -27,9 +40,42 @@ public class RobotController : IADrivenObject
     private void Start()
     {
         currentDirection = RobotDirection.Stop;
-        lastUpdateTime = -1000;             
+        lastUpdateTime = -1000;
+        SetSensorValues();
+    }    
+
+    public void SetConfig(SumobotConfiguration config)
+    {
+        this.moveSpeed = config.moveSpeed;
+        this.rotationSpeed = config.rotationSpeed;
+
+        this.useBackLineSensor = config.useBackLineSensor;
+        this.useFrontLeftLineSensor = config.useFrontLeftLineSensor;
+        this.useFrontRightLineSensor = config.useFrontRightLineSensor;
+        this.useFrontLineSensor = config.useFrontLineSensor;
+
+        this.useFrontDistanceSensor = config.useFrontDistanceSensor;
+        this.useRightDistanceSensor = config.useRightDistanceSensor;
+        this.useLeftDistanceSensor = config.useLeftDistanceSensor;
+
+        this.distanceSensorDistance = config.distanceSensorDistance;
+        this.lineSensorDistance = config.lineSensorDistance;
+
+        SetSensorValues();
+      
     }
-    
+
+    private void SetSensorValues( )
+    {
+        frontRightLineSensor.distance = lineSensorDistance;
+        frontLeftLineSensor.distance = lineSensorDistance;
+        frontLeftLineSensor.distance = lineSensorDistance;
+        backLineSensor.distance = lineSensorDistance;
+
+        frontDistanseSensor.distance = distanceSensorDistance;
+        rightDistanseSensor.distance = distanceSensorDistance;
+        leftDistanseSensor.distance = distanceSensorDistance;
+    }
 
     private void Update()
     {
@@ -38,6 +84,7 @@ public class RobotController : IADrivenObject
             UpdateSumobot();
         }      
     }
+    
 
     // Update is called once per frame
     void FixedUpdate()
@@ -126,18 +173,7 @@ public class RobotController : IADrivenObject
         {
             enable = false;
         }
-    }
-
-    public override void StartNetwork(NeuralNetwork nn)
-    {
-        this.neuralNetwork = nn;
-        this.useIA = true;
-    }
-
-    public override float GetFitness()
-    {
-        return lifetime*lifetimeWeight + win*winWeight + enemyColisions*enemyCollisionsWeight;
-    }
+    }   
 
     public override void ExecuteIA()
     {
@@ -194,14 +230,41 @@ public class RobotController : IADrivenObject
 
     public override float[] GetInputs()
     {
-        float[] list = new float[6];
-        list[0] = frontDistanseSensor.Detect() ? 1 : 0;
-        list[1] = rightDistanseSensor.Detect() ? 1 : 0;
-        list[2] = leftDistanseSensor.Detect() ? 1 : 0;
+       
+        List<float> l = new List<float>();
 
-        list[3] = frontRightLineSensor.Detect() ? 1 : 0;
-        list[4] = frontLeftLineSensor.Detect() ? 1 : 0;
-        list[5] = backLineSensor.Detect() ? 1 : 0;
+        if (useFrontDistanceSensor)
+        {
+            l.Add( frontDistanseSensor.Detect() ? 1 : 0);
+        }
+        if (useLeftDistanceSensor)
+        {
+            l.Add(leftDistanseSensor.Detect() ? 1 : 0);
+        }
+        if (useRightDistanceSensor)
+        {
+            l.Add(rightDistanseSensor.Detect() ? 1 : 0);
+        }
+
+        if (useFrontLeftLineSensor)
+        {
+            l.Add(frontLeftLineSensor.Detect() ? 1 : 0);
+        }
+        if (useFrontRightLineSensor)
+        {
+            l.Add(frontRightLineSensor.Detect() ? 1 : 0);
+        }
+        if (useBackLineSensor)
+        {
+            l.Add(backLineSensor.Detect() ? 1 : 0);
+        }
+        if (useFrontLineSensor)
+        {
+            l.Add(frontLineSensor.Detect() ? 1 : 0);
+        }
+        
+
+        float[] list = l.ToArray();
 
         return list;
     }

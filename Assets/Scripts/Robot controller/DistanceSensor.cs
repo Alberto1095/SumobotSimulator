@@ -8,7 +8,9 @@ public class DistanceSensor : MonoBehaviour
     public float rotation;
     public float distance;
     public LineRenderer lineRenderer;
-    public bool useLineRenderer;   
+    public bool useLineRenderer;
+
+    public bool lastValuedRead;
 
     public bool Detect()
     {      
@@ -71,6 +73,7 @@ public class DistanceSensor : MonoBehaviour
             
         }
 
+        lastValuedRead = detectedEnemy;
         return detectedEnemy;
     }
 }

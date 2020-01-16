@@ -15,6 +15,14 @@ public class NeuralNetwork
         this.functions = functions;
     }
 
+    public NeuralNetwork(NeuralNetworkConfiguration config)
+    {
+        this.numLevels = config.numLevels;
+        this.functions = config.functions;
+        this.numLayersPerLevel = config.numLayersPerLevel;
+        this.inputNumber = config.numInputs;
+    }
+
     public void InitializeRandom()
     {
         firstLayer = new NeuralLayer(numLayersPerLevel, numLevels, inputNumber,functions);

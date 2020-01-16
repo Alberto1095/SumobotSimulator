@@ -27,7 +27,7 @@ public class SumobotSpawner : MonoBehaviour
         nn.InitializeRandom();
         RobotController rc = robot.GetComponent<RobotController>();
         
-        rc.StartNetwork(nn);
+        //rc.StartNetwork();
         rc.enable = true;
         rc.useIA = true;
 
