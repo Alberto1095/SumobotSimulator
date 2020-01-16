@@ -1,38 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
-public abstract class IADrivenObject : MonoBehaviour
+public interface IADrivenObject
 {
-    //Variables for fitness calculation
-    protected int win;
-    public float winWeight;
-    protected int enemyColisions;
-    public float enemyCollisionsWeight;
-
-    protected NeuralNetwork neuralNetwork;
-    protected float lastUpdateTime;
-    public float updateWaitTime;  
-
-    protected bool CanUpdateIA()
-    {
-        float elapsed = Time.time - lastUpdateTime;
-        if(elapsed > updateWaitTime)
-        {
-            lastUpdateTime = Time.time;
-            return true;
-        }
-        return false;
-    }
-
-    public void StartNetwork(NeuralNetworkConfiguration config) {
-        neuralNetwork = new NeuralNetwork(config);
-    }
-    public float GetFitness()
-    {
-        return win * winWeight + enemyColisions * enemyCollisionsWeight;
-    }
-    public abstract void ExecuteIA();
-    public abstract float[] GetInputs();
-    public abstract List<float> GetEvaluation();
+    void StartNetwork(NeuralNetworkConfiguration config);
+    float GetFitness();    
+    void ExecuteIA();
+    float[] GetInputs();
+    List<float> GetEvaluation();
 }

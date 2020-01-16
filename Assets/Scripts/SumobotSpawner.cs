@@ -16,7 +16,7 @@ public class SumobotSpawner : MonoBehaviour
     }
 
    public GameObject CreateSumobot(Vector3 position,Quaternion rotation)
-   {
+   {    /*
         GameObject robot = Instantiate(sumobotPrefab, position, rotation);
 
         int numLevels = 1;
@@ -32,5 +32,7 @@ public class SumobotSpawner : MonoBehaviour
         rc.useIA = true;
 
         return robot;
+        */
+        return null;
    }
 }
