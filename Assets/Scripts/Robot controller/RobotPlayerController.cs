@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RobotPlayerController : RobotController
 {   
-    
+
     protected override void UpdateSumobot()
     {
        CheckUserInput();       
@@ -33,5 +33,10 @@ public class RobotPlayerController : RobotController
             currentDirection = RobotDirection.Stop;
         }
     }
-    
+
+    public override void SetWin(bool b)
+    {
+        
+    }
+
 }

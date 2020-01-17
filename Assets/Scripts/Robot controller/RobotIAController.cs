@@ -48,20 +48,27 @@ public class RobotIAController : RobotController,IADrivenObject
     {
         base.SetConfig(config);
 
-        this.useBackLineSensor = config.useBackLineSensor;
-        this.useFrontLeftLineSensor = config.useFrontLeftLineSensor;
-        this.useFrontRightLineSensor = config.useFrontRightLineSensor;
-        this.useFrontLineSensor = config.useFrontLineSensor;
+        if(config is SumobotIAConfiguration)
+        {
+            SumobotIAConfiguration iaConfig = (SumobotIAConfiguration)config;
 
-        this.useFrontDistanceSensor = config.useFrontDistanceSensor;
-        this.useRightDistanceSensor = config.useRightDistanceSensor;
-        this.useLeftDistanceSensor = config.useLeftDistanceSensor;
+            this.useBackLineSensor = iaConfig.useBackLineSensor;
+            this.useFrontLeftLineSensor = iaConfig.useFrontLeftLineSensor;
+            this.useFrontRightLineSensor = iaConfig.useFrontRightLineSensor;
+            this.useFrontLineSensor = iaConfig.useFrontLineSensor;
 
-        this.distanceSensorDistance = config.distanceSensorDistance;
-        this.lineSensorDistance = config.lineSensorDistance;
+            this.useFrontDistanceSensor = iaConfig.useFrontDistanceSensor;
+            this.useRightDistanceSensor = iaConfig.useRightDistanceSensor;
+            this.useLeftDistanceSensor = iaConfig.useLeftDistanceSensor;
 
-        SetSensorValues();
-      
+            this.distanceSensorDistance = iaConfig.distanceSensorDistance;
+            this.lineSensorDistance = iaConfig.lineSensorDistance;
+
+            SetSensorValues();
+
+            neuralNetwork = new NeuralNetwork(iaConfig);
+        }
+       
     }
 
     private void SetSensorValues( )
@@ -101,6 +108,7 @@ public class RobotIAController : RobotController,IADrivenObject
     {
         if(neuralNetwork != null)
         {
+
             float[] outputs = neuralNetwork.CalculateOutput(GetInputs());
             float minThreshold = 0.4f;
 
@@ -131,19 +139,19 @@ public class RobotIAController : RobotController,IADrivenObject
             switch (outputSelected)
             {
                 case 0:
-                    currentDirection = RobotDirection.Up;
+                    currentDirection = RobotDirection.Up;                   
                     break;
                 case 1:
-                    currentDirection = RobotDirection.Down;
+                    currentDirection = RobotDirection.Down;                    
                     break;
                 case 2:
-                    currentDirection = RobotDirection.Right;
+                    currentDirection = RobotDirection.Right;                  
                     break;
                 case 3:
-                    currentDirection = RobotDirection.Left;
+                    currentDirection = RobotDirection.Left;                   
                     break;
                 case 4:
-                    currentDirection = RobotDirection.Stop;
+                    currentDirection = RobotDirection.Stop;                   
                     break;
             }
         }
@@ -196,13 +204,22 @@ public class RobotIAController : RobotController,IADrivenObject
         return neuralNetwork.GetWeights();
     }
 
-    public void StartNetwork(NeuralNetworkConfiguration config)
-    {
-        neuralNetwork = new NeuralNetwork(config);
-    }
+  
 
     public float GetFitness()
     {
         return win * winWeight + enemyCollisionsWeight * enemyColisions;
+    }
+
+    public override void SetWin(bool b)
+    {
+        if (b)
+        {
+            win = 1;
+        }
+        else
+        {
+            win = 0;
+        }
     }
 }

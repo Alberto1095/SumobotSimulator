@@ -38,8 +38,7 @@ public class Neuron
         weights = new List<float>();
         for (int i = 0; i < numberOfInputs + 1; i++)
         {
-            num = (float)(min + Random.value*(max - min));
-            Debug.Log("ADDING RANDOM WEIGH: " + num);
+            num = (float)(min + Random.value*(max - min));            
             weights.Insert(i, num);
         }
     }

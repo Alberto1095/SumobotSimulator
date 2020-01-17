@@ -43,3 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2e6f2d08b8fe504aa5a0dfc9589afc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sumobotPlayerPrefab: {fileID: 8779768624021758309, guid: 1da542df41ac79742883689dde97bcf9,
+    type: 3}
+  sumobotIAPrefab: {fileID: 8779768624021758309, guid: 792c4e27ab9c7324990b5a34b249c25f,
+    type: 3}
+  combatAreaPrefab: {fileID: 1989533544877858774, guid: 1079a57257115df41b537114bb24bd77,
+    type: 3}

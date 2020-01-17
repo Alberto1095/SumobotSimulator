@@ -15,12 +15,17 @@ public class NeuralNetwork
         this.functions = functions;
     }
 
-    public NeuralNetwork(NeuralNetworkConfiguration config)
+    public NeuralNetwork(SumobotIAConfiguration config)
     {
         this.numLevels = config.numLevels;
         this.functions = config.functions;
         this.numLayersPerLevel = config.numLayersPerLevel;
         this.inputNumber = config.numInputs;
+
+        if(config.weights == null)
+        {
+            InitializeRandom();
+        }
     }
 
     public void InitializeRandom()

@@ -2,7 +2,6 @@
 
 public interface IADrivenObject
 {
-    void StartNetwork(NeuralNetworkConfiguration config);
     float GetFitness();    
     void ExecuteIA();
     float[] GetInputs();

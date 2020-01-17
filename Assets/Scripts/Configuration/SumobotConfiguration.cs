@@ -6,38 +6,25 @@ public class SumobotConfiguration
 {
     public float moveSpeed;
     public float rotationSpeed;
-    public float lineSensorDistance;
-    public float distanceSensorDistance;
-
-    public bool useFrontDistanceSensor;
-    public bool useLeftDistanceSensor;
-    public bool useRightDistanceSensor;
-
-    public bool useFrontRightLineSensor;
-    public bool useFrontLeftLineSensor;
-    public bool useFrontLineSensor;
-    public bool useBackLineSensor;
+    
 
     public SumobotConfiguration()
-    {
+    {       
 
     }
 
-    public SumobotConfiguration(float moveSpeed, float rotationSpeed, float lineSensorDistance, 
-        float distanceSensorDistance, bool useFrontDistanceSensor, bool useLeftDistanceSensor, 
-        bool useRightDistanceSensor, bool useFrontRightLineSensor, bool useFrontLeftLineSensor, 
-        bool useFrontLineSensor, bool useBackLineSensor)
+    public static SumobotConfiguration GetDefaultPlayerConfig()
+    {
+        SumobotConfiguration sc = new SumobotConfiguration();
+        sc.moveSpeed = 6;
+        sc.rotationSpeed = 200;        
+
+        return sc;
+    }
+
+    public SumobotConfiguration(float moveSpeed, float rotationSpeed)
     {
         this.moveSpeed = moveSpeed;
         this.rotationSpeed = rotationSpeed;
-        this.lineSensorDistance = lineSensorDistance;
-        this.distanceSensorDistance = distanceSensorDistance;
-        this.useFrontDistanceSensor = useFrontDistanceSensor;
-        this.useLeftDistanceSensor = useLeftDistanceSensor;
-        this.useRightDistanceSensor = useRightDistanceSensor;
-        this.useFrontRightLineSensor = useFrontRightLineSensor;
-        this.useFrontLeftLineSensor = useFrontLeftLineSensor;
-        this.useFrontLineSensor = useFrontLineSensor;
-        this.useBackLineSensor = useBackLineSensor;
     }
 }
