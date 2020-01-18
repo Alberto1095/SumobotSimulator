@@ -1,5 +1,20 @@
 ﻿using System.Collections.Generic;
 
+public enum ActivationFunction { Relu, Sigmoid, Lineal };
+
+public struct ActivationFunctions
+{
+    public ActivationFunction middleLayersFunction;
+    public ActivationFunction finalLayerFunction;
+
+    public ActivationFunctions(ActivationFunction middleLayer, ActivationFunction finalLayer)
+    {
+        this.middleLayersFunction = middleLayer;
+        this.finalLayerFunction = finalLayer;
+    }
+   
+}
+
 public class SumobotIAConfiguration: SumobotConfiguration
 {
     public float lineSensorDistance;
@@ -19,7 +34,6 @@ public class SumobotIAConfiguration: SumobotConfiguration
     public List<int> numLayersPerLevel;
     public ActivationFunctions functions;
     public List<float> weights;
-
 
     public SumobotIAConfiguration()
     {

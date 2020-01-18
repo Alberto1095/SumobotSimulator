@@ -35,7 +35,8 @@ public class StartingMenuController : MonoBehaviour
 
     public void OnTrainingButtonPressed()
     {
-        //TODO
+        Show(false);
+        TrainingMenuController.Instance.Show(true);
     }
 
     public void OnCombatButtonPressed()
