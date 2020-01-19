@@ -1,5 +1,5 @@
 ﻿public enum SelectionFunction { Tournament };
-public enum MutationFunction { Gaussian };
+public enum MutationFunction { Normal };
 public enum CrossFunction { BLX };
 
 public class GeneticEvolutionConfiguration 
@@ -8,13 +8,15 @@ public class GeneticEvolutionConfiguration
     public int population;
    
     public SelectionFunction selectionFunction;
-    public bool useMutation;
-    
+    public int tournamentSize;
+
+    public bool useMutation;    
     public MutationFunction mutationFunction;
     public float mutationChance;
    
     public CrossFunction crossFunction;
     public float crossChance;
+    public float alphaBLX;
 
     public bool useElitismo;
 
@@ -37,5 +39,23 @@ public class GeneticEvolutionConfiguration
         this.crossFunction = crossFunction;
         this.crossChance = crossChance;
         this.useElitismo = useElitismo;
+    }
+
+    public static GeneticEvolutionConfiguration GetDefaultConfig()
+    {
+        GeneticEvolutionConfiguration config = new GeneticEvolutionConfiguration();
+        config.maxSteps = 10000;
+        config.population = 2;
+        config.selectionFunction = SelectionFunction.Tournament;
+        config.mutationFunction = MutationFunction.Normal;
+        config.useMutation = false;
+        config.mutationChance = 0.05f;
+        config.useElitismo = true;
+        config.crossChance = 0.95f;
+        config.crossFunction = CrossFunction.BLX;
+        config.tournamentSize = 2;
+        config.alphaBLX = 0.5f;
+
+        return config;
     }
 }

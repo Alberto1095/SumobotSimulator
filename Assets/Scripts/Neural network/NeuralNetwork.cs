@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class NeuralNetwork 
 {
@@ -18,13 +19,18 @@ public class NeuralNetwork
     public NeuralNetwork(SumobotIAConfiguration config)
     {
         this.numLevels = config.numLevels;
-        this.functions = config.functions;
+        this.functions = config.functions;        
         this.numLayersPerLevel = config.numLayersPerLevel;
         this.inputNumber = config.numInputs;
 
         if(config.weights == null)
         {
+          
             InitializeRandom();
+        }
+        else
+        {
+            InitializeUsingCustomWeightValues(config.weights);
         }
     }
 

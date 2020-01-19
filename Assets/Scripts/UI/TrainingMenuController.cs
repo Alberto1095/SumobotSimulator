@@ -42,6 +42,8 @@ public class TrainingMenuController : MonoBehaviour
     public InputField inputMutationChance;
     public Dropdown inputCrossFunction;
     public InputField inputCrossChance;
+    public InputField inputAlphaBLX;
+    public InputField inputTournamentSize;
 
 
     public static TrainingMenuController Instance = null;
@@ -138,7 +140,8 @@ public class TrainingMenuController : MonoBehaviour
         config.crossFunction = (CrossFunction)System.Enum.Parse(typeof(CrossFunction),
             inputCrossFunction.options[inputCrossFunction.value].text);
         config.crossChance = float.Parse(inputCrossChance.text);
-
+        config.alphaBLX = float.Parse(inputAlphaBLX.text);
+        config.tournamentSize = int.Parse(inputTournamentSize.text);
         return config;
     }
 
@@ -150,7 +153,8 @@ public class TrainingMenuController : MonoBehaviour
 
     public void OnStartPressed()
     {
-
+        Show(false);
+        GeneticEvolutionManager.Instance.StartEvolution(GetGeneticEvolutionConfiguration(), GetAIConfig());
     }
 
     

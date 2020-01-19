@@ -5,5 +5,5 @@ public interface IADrivenObject
     float GetFitness();    
     void ExecuteIA();
     float[] GetInputs();
-    List<float> GetEvaluation();
+    Evaluation GetEvaluation();
 }

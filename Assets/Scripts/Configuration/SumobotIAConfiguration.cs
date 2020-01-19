@@ -11,8 +11,7 @@ public struct ActivationFunctions
     {
         this.middleLayersFunction = middleLayer;
         this.finalLayerFunction = finalLayer;
-    }
-   
+    }   
 }
 
 public class SumobotIAConfiguration: SumobotConfiguration
@@ -86,5 +85,34 @@ public class SumobotIAConfiguration: SumobotConfiguration
         sc.weights = null;
 
         return sc;
+    }
+
+    public static SumobotIAConfiguration Copy(SumobotIAConfiguration c)
+    {
+        SumobotIAConfiguration config = new SumobotIAConfiguration();
+        config.moveSpeed = c.moveSpeed;
+        config.rotationSpeed = c.rotationSpeed;
+
+        config.lineSensorDistance = c.lineSensorDistance;
+        config.distanceSensorDistance = c.distanceSensorDistance;
+        config.useBackLineSensor = c.useBackLineSensor;
+        config.useFrontLineSensor = c.useFrontLineSensor;
+        config.useFrontRightLineSensor = c.useFrontRightLineSensor;
+        config.useFrontLeftLineSensor = c.useFrontLeftLineSensor;
+        config.useFrontDistanceSensor = c.useFrontDistanceSensor;
+        config.useLeftDistanceSensor = c.useLeftDistanceSensor;
+        config.useRightDistanceSensor = c.useRightDistanceSensor;
+
+        config.numInputs = c.numInputs;
+        config.numLevels = c.numLevels;
+        config.numLayersPerLevel = new List<int>(c.numLayersPerLevel);
+        config.functions = c.functions;
+        if(c.weights != null)
+        {
+            config.weights = new List<float>(c.weights);
+        }
+       
+
+        return config;
     }
 }

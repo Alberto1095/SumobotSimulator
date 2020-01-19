@@ -4,28 +4,30 @@ using UnityEngine;
 
 public class CombatController : MonoBehaviour,CombatListenner
 {
-    private RobotController robotA;
-    private RobotController robotB;
+    public RobotController robotA;
+    public RobotController robotB;
 
     public enum CombatResult { WINA,WINB,DRAW};
     [HideInInspector]
     public CombatResult result;
 
     private bool started;
+    public bool finished;
     private float startTime;
     private float maxTime;     
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         started = false;
-        //20 segundos
-        maxTime = 20000;
+        finished = false;
+        //10 segundos
+        maxTime = 10;
     }
 
     // Update is called once per frame
     void Update()
-    {
+    {       
         CheckTimeFinished();
     }
 
@@ -59,19 +61,20 @@ public class CombatController : MonoBehaviour,CombatListenner
     }
     
     private void CheckTimeFinished()
-    {
+    {        
         if (started)
         {
-            float elapsed = Time.time - startTime;
+            float elapsed = Time.time - startTime;            
             if(elapsed > maxTime)
-            {
-                started = false;
+            {                
 
                 robotA.SetEnable(false);
                 robotB.SetEnable(false);
 
                 result = CombatResult.DRAW;
-                SetResult();           }
+                SetResult();
+                finished = true;
+            }
         }       
     }
 
@@ -110,5 +113,6 @@ public class CombatController : MonoBehaviour,CombatListenner
         }
 
         SetResult();
+        finished = true;
     }
 }

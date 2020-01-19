@@ -16,9 +16,8 @@ public abstract class RobotController : MonoBehaviour
     
     public CombatListenner listenner;
 
-    protected virtual void Start()
+    protected virtual void Awake()
     {
-        Debug.Log("START PARENT");            
         currentDirection = RobotDirection.Stop;      
     }    
 
@@ -93,9 +92,9 @@ public abstract class RobotController : MonoBehaviour
         return forwardVector;
     } 
 
-    private void OnTriggerExit2D(Collider2D collision)
+    protected void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("COLISION EXIT RING: " + collision.gameObject.name);
+        //Debug.Log("COLISION EXIT RING: " + collision.gameObject.name);
         if(collision.gameObject.layer == LayerMask.NameToLayer("Exterior"))
         {
             SetEnable(false);

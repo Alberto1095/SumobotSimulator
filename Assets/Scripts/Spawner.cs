@@ -32,27 +32,13 @@ public class Spawner : MonoBehaviour
         //Dont destroy on load
         DontDestroyOnLoad(gameObject);
     }
+    
 
-    private void Start()
+   
+
+    public CombatController CreatePlayerVsIACombat(Vector3 position,SumobotConfiguration sumobotConfig, SumobotIAConfiguration iaConfig)
     {
-        InvokeRepeating("SpawnRandom", 0, 4);
-    }
-
-    public void SpawnRandom()
-    {
-        Destroy(currentMatch);
-        SumobotConfiguration config = SumobotConfiguration.GetDefaultPlayerConfig();
-        Vector3 pos = new Vector3(0, 0, 0);
-        SumobotIAConfiguration ia = SumobotIAConfiguration.GetDefaultIAConfig();
-
-
-        currentMatch = CreatePlayerVsIACombat(pos, config, ia);
-    }
- 
-
-    public GameObject CreatePlayerVsIACombat(Vector3 position,SumobotConfiguration sumobotConfig, SumobotIAConfiguration iaConfig)
-    {
-        GameObject go = Instantiate(combatAreaPrefab, position, Quaternion.identity);
+        GameObject go = Instantiate(combatAreaPrefab, position, Quaternion.identity,transform);
         
         GameObject r1 = Instantiate(sumobotPlayerPrefab, go.transform);
         RobotController rc1 = r1.GetComponent<RobotController>();
@@ -67,19 +53,19 @@ public class Spawner : MonoBehaviour
         CombatController controller = go.GetComponent<CombatController>();
         controller.StartMatch(rc1, rc2);
 
-        return go;
+        return controller;
     }
 
-    public GameObject CreateIAvsIACombat(Vector3 position, SumobotIAConfiguration iaConfig1, SumobotIAConfiguration iaConfig2)
+    public CombatController CreateIAvsIACombat(Vector3 position, SumobotIAConfiguration iaConfig1, SumobotIAConfiguration iaConfig2)
     {
-        GameObject go = Instantiate(combatAreaPrefab, position, Quaternion.identity);
+        GameObject go = Instantiate(combatAreaPrefab, position, Quaternion.identity,transform);
 
-        GameObject r1 = Instantiate(sumobotPlayerPrefab, go.transform);
+        GameObject r1 = Instantiate(sumobotIAPrefab, go.transform);
         RobotController rc1 = r1.GetComponent<RobotController>();
         RobotIAController ia1 = (RobotIAController)rc1;
         ia1.SetConfig(iaConfig1);
 
-        GameObject r2 = Instantiate(sumobotPlayerPrefab, go.transform);
+        GameObject r2 = Instantiate(sumobotIAPrefab, go.transform);
         RobotController rc2 = r2.GetComponent<RobotController>();
         RobotIAController ia2 = (RobotIAController)rc2;
         ia2.SetConfig(iaConfig2);
@@ -87,6 +73,6 @@ public class Spawner : MonoBehaviour
         CombatController controller = go.GetComponent<CombatController>();
         controller.StartMatch(rc1, rc2);
 
-        return go;
+        return controller;
     }
 }

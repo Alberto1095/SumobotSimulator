@@ -1,1 +1,2 @@
 - Comprobar funcionamiento red neuronal con diferentes funciones
+- COmprobar functionamiento creacion generacion

@@ -37,9 +37,9 @@ public class RobotIAController : RobotController,IADrivenObject
     protected float lastUpdateTime;
     public float updateWaitTime;   
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();       
+        base.Awake();       
         lastUpdateTime = -1000;
         SetSensorValues();
     }    
@@ -199,12 +199,10 @@ public class RobotIAController : RobotController,IADrivenObject
         return list;
     }
 
-    public List<float> GetEvaluation()
+    public Evaluation GetEvaluation()
     {
-        return neuralNetwork.GetWeights();
-    }
-
-  
+        return new Evaluation(neuralNetwork.GetWeights());
+    }  
 
     public float GetFitness()
     {
@@ -221,5 +219,49 @@ public class RobotIAController : RobotController,IADrivenObject
         {
             win = 0;
         }
+    }
+
+    private bool HasDetectedSensor()
+    {      
+        if (useFrontDistanceSensor)
+        {
+            if (frontDistanseSensor.lastValuedRead)
+            {
+                return true;
+            }
+            
+        }
+        if (useLeftDistanceSensor)
+        {
+            if (leftDistanseSensor.lastValuedRead)
+            {
+                return true;
+            }
+        }
+        if (useRightDistanceSensor)
+        {
+            if (rightDistanseSensor.lastValuedRead)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (enable)
+        {
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Robot")
+                && collision.gameObject != gameObject)
+            {
+                //Check sensor 
+                if (HasDetectedSensor())
+                {
+                    enemyColisions++;
+                }
+            }
+        }        
     }
 }
