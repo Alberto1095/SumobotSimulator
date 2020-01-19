@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spawner : MonoBehaviour
+public class CombatManager : MonoBehaviour
 {
+    public List<CombatController> combatControllers;
+
     //Configuration variables
     public GameObject sumobotPlayerPrefab;
     public GameObject sumobotIAPrefab;
     public GameObject combatAreaPrefab;
 
     //Singleton
-    public static Spawner Instance = null;
+    public static CombatManager Instance = null;
 
     private GameObject currentMatch;
 
@@ -32,8 +34,6 @@ public class Spawner : MonoBehaviour
         //Dont destroy on load
         DontDestroyOnLoad(gameObject);
     }
-    
-
    
 
     public CombatController CreatePlayerVsIACombat(Vector3 position,SumobotConfiguration sumobotConfig, SumobotIAConfiguration iaConfig)
@@ -75,4 +75,79 @@ public class Spawner : MonoBehaviour
 
         return controller;
     }
+
+    public void SpawnGeneration(List<Evaluation> list, SumobotIAConfiguration configSumobot, GeneticEvolutionConfiguration config)
+    {
+        Clear();
+        int startX = 0;
+        int startY = 0;
+        int offset = 20;
+        int maxRow = 6;
+        int rowCount = 0;
+        Vector3 pos;
+        int count = config.population;
+        SumobotIAConfiguration c1, c2;
+        for (int i = 0; i < count; i += 2)
+        {
+            pos = new Vector3(startX, startY, 0);
+            startX += offset;
+            rowCount++;
+            if (rowCount >= maxRow)
+            {
+                rowCount = 0;
+                startY -= offset;
+                startX = 0;
+            }
+            c1 = SumobotIAConfiguration.Copy(configSumobot);
+            c1.weights = list[i].GetEvaluation();
+            c2 = SumobotIAConfiguration.Copy(configSumobot);
+            c2.weights = list[i + 1].GetEvaluation();
+
+            CombatController match = CreateIAvsIACombat(pos, c1, c2);
+            combatControllers.Add(match);
+        }
+    }
+
+    public void SpawnRandomGeneration(SumobotIAConfiguration configSumobot, GeneticEvolutionConfiguration config)
+    {
+        Clear();        
+        int startX = 0;
+        int startY = 0;
+        int offset = 25;
+        int maxRow = 6;
+        int rowCount = 0;
+        Vector3 pos;
+        int count  = config.population / 2;       
+       
+        for (int i = 0; i < count; i++)
+        {
+            pos = new Vector3(startX, startY, 0);
+            startX += offset;
+            rowCount++;
+            if (rowCount >= maxRow)
+            {
+                rowCount = 0;
+                startY -= offset;
+                startX = 0;
+            }
+            CombatController match = CreateIAvsIACombat(pos, SumobotIAConfiguration.Copy(configSumobot), SumobotIAConfiguration.Copy(configSumobot));
+            combatControllers.Add(match);
+        }
+    }
+
+    private void Clear()
+    {
+        if(combatControllers != null)
+        {
+            foreach (CombatController cc in combatControllers)
+            {
+                Destroy(cc.gameObject);
+            }
+        }
+
+        combatControllers = new List<CombatController>();
+        
+    }
+
+
 }

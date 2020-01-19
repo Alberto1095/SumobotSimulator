@@ -5,20 +5,11 @@ using UnityEngine;
 public class Generation : MonoBehaviour
 {
     private List<RobotIAController> robotList;
-    private List<CombatController> combatControllers;    
+    
     private GeneticEvolutionConfiguration config;
     private SumobotIAConfiguration configSumobot;
 
-    private bool started = false;
-
-
-    public void DestroyGeneration()
-    {
-        foreach(CombatController cc in combatControllers)
-        {
-            Destroy(cc.gameObject);
-        }
-    }
+    private bool started = false;   
 
     // Update is called once per frame
     void Update()
@@ -33,7 +24,7 @@ public class Generation : MonoBehaviour
     {
         bool end = true;
 
-        foreach(CombatController c in combatControllers)
+        foreach(CombatController c in CombatManager.Instance.combatControllers)
         {
             if (!c.finished)
             {
@@ -53,11 +44,11 @@ public class Generation : MonoBehaviour
     private void SetRobotList()
     {
         robotList = new List<RobotIAController>();
-        foreach(CombatController c in combatControllers)
+        foreach (CombatController c in CombatManager.Instance.combatControllers)
         {
             robotList.Add(c.robotA as RobotIAController);
             robotList.Add(c.robotB as RobotIAController);
-        }       
+        }
     }
 
 
@@ -65,109 +56,17 @@ public class Generation : MonoBehaviour
     {
         this.config = config1;
         this.configSumobot = config2;        
-        this.combatControllers = new List<CombatController>();
-        SpawnRandom();
+        CombatManager.Instance.SpawnRandomGeneration(config2,config);
         SetRobotList();
         started = true;
     }
-
-    private void SpawnRandom()
-    {
-        int startX = 0;
-        int startY = 0;
-        int offset = 25;
-        int maxRow = 6;
-        int rowCount = 0;
-        Vector3 pos;
-        int count = config.population / 2;
-        for (int i = 0; i < count; i++)
-        {
-            pos = new Vector3(startX, startY, 0);
-            startX += offset;
-            rowCount++;
-            if (rowCount >= maxRow)
-            {
-                rowCount = 0;
-                startY -= offset;
-                startX = 0;
-            }
-
-            CombatController match = Spawner.Instance.CreateIAvsIACombat(pos, SumobotIAConfiguration.Copy(configSumobot), SumobotIAConfiguration.Copy(configSumobot));
-            combatControllers.Add(match);
-        }
-    }
-
-    private void Spawn(List<Evaluation> list)
-    {
-        int startX = 0;
-        int startY = 0;
-        int offset = 20;
-        int maxRow = 6;
-        int rowCount = 0;
-        Vector3 pos;
-        int count = config.population;        
-        SumobotIAConfiguration c1, c2;
-        for (int i = 0; i < count; i+=2)
-        {
-            pos = new Vector3(startX, startY, 0);
-            startX += offset;
-            rowCount++;
-            if (rowCount >= maxRow)
-            {
-                rowCount = 0;
-                startY -= offset;
-                startX = 0;
-            }
-            c1 = SumobotIAConfiguration.Copy(configSumobot);
-            c1.weights = list[i].GetEvaluation();
-            c2 = SumobotIAConfiguration.Copy(configSumobot);
-            c2.weights = list[i+1].GetEvaluation();
-
-            CombatController match = Spawner.Instance.CreateIAvsIACombat(pos, c1,c2);
-            combatControllers.Add(match);
-        }
-    }
-
-    private Evaluation GetBestFitnessEval()
-    {
-        Evaluation eval = null;
-        int index = 0;
-        int bestIndex = 0;
-        float best = 0;
-        foreach (RobotIAController r in robotList)
-        {
-            if (r.GetFitness() >= best)
-            {
-                best = r.GetFitness();
-                eval = r.GetEvaluation();
-                bestIndex = index;
-            }
-            index++;
-        }
-        Debug.Log("BEST FITNESS: " + best);
-        return eval;
-    }
-
-    public List<Evaluation> GetEvaluationList()
-    {
-        List<Evaluation> l = new List<Evaluation>();
-        foreach(RobotIAController r in robotList)
-        {
-            l.Add(r.GetEvaluation());
-        }
-
-        return l;
-    }
-
+    
     public void CreateGenerationFromPrevious(Generation bg)
     {   
         this.config = bg.config;
-        this.configSumobot = bg.configSumobot;
-        this.combatControllers = new List<CombatController>();
-        this.robotList = new List<RobotIAController>();
+        this.configSumobot = bg.configSumobot;         
         //Get best fitness eval of previous generation		
-        Evaluation bestEval = bg.GetBestFitnessEval();
-        
+        Evaluation bestEval = bg.GetBestFitnessEval();        
 
         //Selection
         int[] indexParents = null;
@@ -204,9 +103,8 @@ public class Generation : MonoBehaviour
             hijosEvaluation.Add(bestEval);
         }
 
-        //Spawn new generation
-        bg.DestroyGeneration();
-        Spawn(hijosEvaluation);
+        //Spawn new generation       
+        CombatManager.Instance.SpawnGeneration(hijosEvaluation,configSumobot,config);
         SetRobotList();
         started = true;
     }
@@ -220,6 +118,37 @@ public class Generation : MonoBehaviour
         }
 
         return f;
+    }
+
+    private Evaluation GetBestFitnessEval()
+    {
+        Evaluation eval = null;
+        int index = 0;
+        int bestIndex = 0;
+        float best = 0;
+        foreach (RobotIAController r in robotList)
+        {
+            if (r.GetFitness() >= best)
+            {
+                best = r.GetFitness();
+                eval = r.GetEvaluation();
+                bestIndex = index;
+            }
+            index++;
+        }
+        Debug.Log("BEST FITNESS: " + best);
+        return eval;
+    }
+
+    public List<Evaluation> GetEvaluationList()
+    {
+        List<Evaluation> l = new List<Evaluation>();
+        foreach (RobotIAController r in robotList)
+        {
+            l.Add(r.GetEvaluation());
+        }
+
+        return l;
     }
 
     private int[] TournamentSelection(float[] fitnessList, int tournamentSize)
@@ -338,5 +267,5 @@ public class Generation : MonoBehaviour
         return hijosEvaluation;
     }
 
-
+    
 }
