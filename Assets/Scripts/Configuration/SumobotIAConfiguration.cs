@@ -73,15 +73,15 @@ public class SumobotIAConfiguration: SumobotConfiguration
         sc.useRightDistanceSensor = false;
         sc.useLeftDistanceSensor = false;
 
-        sc.useBackLineSensor = true;
-        sc.useFrontLineSensor = true;
+        sc.useBackLineSensor = false;
+        sc.useFrontLineSensor = false;
         sc.useFrontLeftLineSensor = false;
         sc.useFrontRightLineSensor = false;
 
-        sc.numInputs = 3;
+        sc.numInputs = 1;
         sc.numLevels = 1;
         sc.numLayersPerLevel = new List<int>() { 5 };
-        sc.functions =  new ActivationFunctions(ActivationFunction.Lineal, ActivationFunction.Lineal);
+        sc.functions =  new ActivationFunctions(ActivationFunction.Relu, ActivationFunction.Sigmoid);
         sc.weights = null;
 
         return sc;

@@ -45,7 +45,7 @@ public class GeneticEvolutionConfiguration
     {
         GeneticEvolutionConfiguration config = new GeneticEvolutionConfiguration();
         config.maxSteps = 10000;
-        config.population = 2;
+        config.population = 10;
         config.selectionFunction = SelectionFunction.Tournament;
         config.mutationFunction = MutationFunction.Normal;
         config.useMutation = false;
@@ -53,7 +53,7 @@ public class GeneticEvolutionConfiguration
         config.useElitismo = true;
         config.crossChance = 0.95f;
         config.crossFunction = CrossFunction.BLX;
-        config.tournamentSize = 2;
+        config.tournamentSize = 4;
         config.alphaBLX = 0.5f;
 
         return config;

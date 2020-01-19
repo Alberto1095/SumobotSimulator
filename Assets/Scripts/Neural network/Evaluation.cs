@@ -48,4 +48,14 @@ public class Evaluation
 
         return evaluation.Count;
     }
+
+    public void Log()
+    {
+        string str = "Eval: ";
+        foreach(float f in evaluation)
+        {
+            str += f+" - ";
+        }
+        Debug.Log(str);
+    }
 }

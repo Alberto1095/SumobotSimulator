@@ -106,14 +106,16 @@ public class RobotIAController : RobotController,IADrivenObject
 
     public void ExecuteIA()
     {
+
         if(neuralNetwork != null)
         {
-
-            float[] outputs = neuralNetwork.CalculateOutput(GetInputs());
+            float[] inputs = GetInputs();
+            float[] outputs = neuralNetwork.CalculateOutput(inputs);
             float minThreshold = 0.4f;
-
+            int outputSelected;
             //Decide which direction move
             //Select one random from the ones with output higher than minimun threshold
+            /*
             List<int> list = new List<int>();
 
             for (int i = 0; i < outputs.Length; i++)
@@ -124,7 +126,7 @@ public class RobotIAController : RobotController,IADrivenObject
                 }
             }
 
-            int outputSelected;
+           
             int randomIndex;
             if (list.Count > 0)
             {
@@ -134,7 +136,18 @@ public class RobotIAController : RobotController,IADrivenObject
             else
             {
                 outputSelected = Random.Range(0, outputs.Length);                
-            }            
+            }     
+            */
+            float bestOutput = outputs[0];
+            outputSelected = 0;
+            for(int i = 0;i<outputs.Length;i++)
+            {
+                if(outputs[i] > bestOutput)
+                {
+                    bestOutput = outputs[i];
+                    outputSelected = i;
+                }
+            }
 
             switch (outputSelected)
             {
@@ -258,7 +271,7 @@ public class RobotIAController : RobotController,IADrivenObject
             {
                 //Check sensor 
                 if (HasDetectedSensor())
-                {
+                {                   
                     enemyColisions++;
                 }
             }

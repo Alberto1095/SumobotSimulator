@@ -103,6 +103,11 @@ public class Generation : MonoBehaviour
             hijosEvaluation.Add(bestEval);
         }
 
+        foreach(Evaluation v in hijosEvaluation)
+        {
+            v.Log();
+        }
+
         //Spawn new generation       
         CombatManager.Instance.SpawnGeneration(hijosEvaluation,configSumobot,config);
         SetRobotList();
