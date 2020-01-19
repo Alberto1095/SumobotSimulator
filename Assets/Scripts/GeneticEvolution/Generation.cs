@@ -36,7 +36,7 @@ public class Generation : MonoBehaviour
         if (end)
         {
             started = false;
-            Debug.Log("ENDED GEENRATION: "+robotList.Count);
+            Debug.Log("ENDED GENERATION: "+robotList.Count);
             GeneticEvolutionManager.Instance.SpawnNextGeneration();
         }
     }
@@ -53,7 +53,7 @@ public class Generation : MonoBehaviour
 
 
     public void CreateInitialGeneration(GeneticEvolutionConfiguration config1, SumobotIAConfiguration config2)
-    {
+    {      
         this.config = config1;
         this.configSumobot = config2;        
         CombatManager.Instance.SpawnRandomGeneration(config2,config);
@@ -152,16 +152,11 @@ public class Generation : MonoBehaviour
     }
 
     private int[] TournamentSelection(float[] fitnessList, int tournamentSize)
-    {        
-        /*
-        foreach(float f in fitnessList)
-        {
-            Debug.Log("FITNESS: "+ f);
-        }
-        */
+    {      
+       
         int[] indexParents = new int[fitnessList.Length];
         int[] tournamentIndex = new int[tournamentSize];
-        int max = fitnessList.Length - 1;
+        int max = fitnessList.Length;
         int min = 0;
         int bestIndex;
         for (int i = 0; i < fitnessList.Length; i++)
@@ -171,8 +166,9 @@ public class Generation : MonoBehaviour
             
             for (int j = 0; j < tournamentSize; j++)
             {
-                tournamentIndex[j] = Random.Range(min, max+1);               
+                tournamentIndex[j] = Random.Range(min, max);               
             }
+           
             //Elejimos el mejor 
             bestIndex = tournamentIndex[0];
             for (int x = 0; x < tournamentSize; x++)
@@ -182,8 +178,7 @@ public class Generation : MonoBehaviour
                     bestIndex = tournamentIndex[x];
                 }
             }
-            //Añadimos el index		
-           //Debug.Log("BEST INDEX SEELCTED: "+bestIndex);
+            //Añadimos el index	          
             indexParents[i] = bestIndex;
         }
         return indexParents;
@@ -207,9 +202,9 @@ public class Generation : MonoBehaviour
         {
             padre1Ev = population[i];
             padre2Ev = population[i + 1];
-            random = Random.Range(0f,1f);
-            if (random < pcruce)            {               
-               
+            random = Random.Range(0f,1f);            
+            if (random < pcruce)
+            {              
                 hijo1Ev = new Evaluation();
                 hijo2Ev = new Evaluation();
 
@@ -219,7 +214,7 @@ public class Generation : MonoBehaviour
                     paramPadre2 = padre2Ev.GetValue(j);
 
                     distance = Mathf.Abs(paramPadre1 - paramPadre2);
-
+                    
                     paramHijo1 = Mathf.Min(paramPadre2, paramPadre1) - alpha * distance;
                     paramHijo2 = Mathf.Max(paramPadre2, paramPadre1) + alpha * distance;
                     
@@ -251,21 +246,19 @@ public class Generation : MonoBehaviour
         int minParam = 0;
         int randomParam = 0;
         float random = 0;
-        Evaluation selectedChildEv;
+      
         for (int i = 0; i < hijosEvaluation.Count; i++)
         {
             random = Random.Range(0f, 1f);
             if (random < pmutacion)
             {                
-                maxParam = hijosEvaluation[i].Size() - 1;
-                randomParam = (int)(minParam + Random.value * (maxParam - minParam));
-                randomValue = (float)(minValue + Random.value * (maxValue - minValue));
-                selectedChildEv = hijosEvaluation[i];
-                selectedChildEv.SetValue(randomParam, randomValue);
+                maxParam = hijosEvaluation[i].Size();
+                randomParam = Random.Range(minParam, maxParam);               
+                randomValue = (float)(minValue + Random.value * (maxValue - minValue));               
+                hijosEvaluation[i].SetValue(randomParam, randomValue);
             }           
         }
         return hijosEvaluation;
     }
-
     
 }

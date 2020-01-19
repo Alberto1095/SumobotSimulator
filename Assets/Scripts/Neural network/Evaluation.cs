@@ -39,7 +39,7 @@ public class Evaluation
 
     public void SetValue(int pos, float v)
     {
-        evaluation.Insert(pos, v);
+        evaluation[pos] = v;
     }    
 
 

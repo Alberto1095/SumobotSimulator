@@ -39,7 +39,7 @@ public class Neuron
         for (int i = 0; i < numberOfInputs + 1; i++)
         {
             num = (float)(min + Random.value*(max - min));            
-            weights.Insert(i, num);
+            weights.Add(num);
         }
     }
 

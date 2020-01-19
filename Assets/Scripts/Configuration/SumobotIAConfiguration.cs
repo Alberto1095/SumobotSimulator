@@ -79,8 +79,8 @@ public class SumobotIAConfiguration: SumobotConfiguration
         sc.useFrontRightLineSensor = false;
 
         sc.numInputs = 3;
-        sc.numLevels = 2;
-        sc.numLayersPerLevel = new List<int>() { 2, 5 };
+        sc.numLevels = 1;
+        sc.numLayersPerLevel = new List<int>() { 5 };
         sc.functions =  new ActivationFunctions(ActivationFunction.Lineal, ActivationFunction.Lineal);
         sc.weights = null;
 

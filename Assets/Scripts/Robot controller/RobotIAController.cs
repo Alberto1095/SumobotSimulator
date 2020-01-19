@@ -128,12 +128,12 @@ public class RobotIAController : RobotController,IADrivenObject
             int randomIndex;
             if (list.Count > 0)
             {
-                randomIndex = Random.Range(0, list.Count - 1);
+                randomIndex = Random.Range(0, list.Count);
                 outputSelected = list[randomIndex];
             }
             else
             {
-                outputSelected = Random.Range(0, outputs.Length-1);                
+                outputSelected = Random.Range(0, outputs.Length);                
             }            
 
             switch (outputSelected)
