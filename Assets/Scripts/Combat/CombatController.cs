@@ -62,7 +62,7 @@ public class CombatController : MonoBehaviour,CombatListenner
     
     private void CheckTimeFinished()
     {        
-        if (started)
+        if (started && !finished)
         {
             float elapsed = Time.time - startTime;            
             if(elapsed > maxTime)
@@ -70,7 +70,6 @@ public class CombatController : MonoBehaviour,CombatListenner
 
                 robotA.SetEnable(false);
                 robotB.SetEnable(false);
-
                 result = CombatResult.DRAW;
                 SetResult();
                 finished = true;
@@ -98,21 +97,26 @@ public class CombatController : MonoBehaviour,CombatListenner
     }
 
     public void OnDeath(RobotController rc)
-    {
-        if(rc == robotA)
+    {   
+        if(started && !finished)
         {
-            //Robot B wins
-            robotB.SetEnable(false);
-            result = CombatResult.WINB;
-        }
-        else
-        {
-            //Robot A wins
-            robotA.SetEnable(false);
-            result = CombatResult.WINA;
-        }
+            finished = true;
+            if (rc == robotA)
+            {
+                //Robot B wins
+                robotB.SetEnable(false);
+                result = CombatResult.WINB;
+            }
+            else
+            {
+                //Robot A wins
+                robotA.SetEnable(false);
+                result = CombatResult.WINA;
+            }
 
-        SetResult();
-        finished = true;
+            SetResult();
+            
+        }
+        
     }
 }

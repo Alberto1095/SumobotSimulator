@@ -58,8 +58,10 @@ public class GeneticEvolutionManager : MonoBehaviour
 
     public void SpawnNextGeneration()
     {
+       
         currentStep++;
-        if(currentStep >= config.maxSteps)
+        Debug.Log("NEXT GENERATION: " + currentStep);
+        if (currentStep >= config.maxSteps)
         {
             OnFinish();
         }

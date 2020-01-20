@@ -94,11 +94,15 @@ public abstract class RobotController : MonoBehaviour
 
     protected void OnTriggerExit2D(Collider2D collision)
     {
-        //Debug.Log("COLISION EXIT RING: " + collision.gameObject.name);
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Exterior"))
+        if (enable)
         {
-            SetEnable(false);
-            listenner.OnDeath(this);           
+            //Debug.Log("COLISION EXIT RING: " + collision.gameObject.name);
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Exterior"))
+            {
+                SetEnable(false);
+                listenner.OnDeath(this);
+            }
         }
+        
     }      
 }

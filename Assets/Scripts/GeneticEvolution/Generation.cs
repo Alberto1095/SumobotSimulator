@@ -36,7 +36,7 @@ public class Generation : MonoBehaviour
         if (end)
         {
             started = false;
-            Debug.Log("ENDED GENERATION: "+robotList.Count);
+            
             GeneticEvolutionManager.Instance.SpawnNextGeneration();
         }
     }
