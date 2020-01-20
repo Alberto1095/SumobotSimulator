@@ -83,7 +83,7 @@ public class TrainingMenuController : MonoBehaviour
         }
         currentMenuIndex = index;
         menus[currentMenuIndex].SetActive(true);
-        GetAIConfig();
+        
     }
 
     private SumobotIAConfiguration GetAIConfig()
@@ -118,7 +118,8 @@ public class TrainingMenuController : MonoBehaviour
             inputMiddleLayerFunction.options[inputMiddleLayerFunction.value].text);
         func.finalLayerFunction = (ActivationFunction)System.Enum.Parse(typeof(ActivationFunction),
             inputOutputLayerFunction.options[inputOutputLayerFunction.value].text);
-
+        config.functions = func;
+        
         config.weights = null;
 
 

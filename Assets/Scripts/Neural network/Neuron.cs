@@ -56,7 +56,7 @@ public class Neuron
         float salida = 0;
         //Activation function
         if (function == ActivationFunction.Relu)
-        {
+        {           
             //ReLU
             if (f < 0){
                salida = 0;
@@ -67,7 +67,7 @@ public class Neuron
             }
         }
         else if (function == ActivationFunction.Sigmoid)
-        {
+        {           
             //Sigmoid
             salida = 1 / (1 + Mathf.Exp(-1 * f));
         }else if(function == ActivationFunction.Lineal)

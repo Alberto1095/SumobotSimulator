@@ -13,6 +13,7 @@ public class GeneticEvolutionManager : MonoBehaviour
     private Generation currentGeneration;
 
     private int currentStep;
+    private bool started = false;
 
     // Initialize the singleton instance.
     private void Awake()
@@ -35,17 +36,17 @@ public class GeneticEvolutionManager : MonoBehaviour
 
     private void Start()
     {
-        StartEvolution(GeneticEvolutionConfiguration.GetDefaultConfig(), SumobotIAConfiguration.GetDefaultIAConfig());
+        //StartEvolution(GeneticEvolutionConfiguration.GetDefaultConfig(), SumobotIAConfiguration.GetDefaultIAConfig());
     }
 
     public void StartEvolution(GeneticEvolutionConfiguration config,SumobotIAConfiguration iaConfig)
     {
+        started = true;
         this.config = config;
         this.iaConfig = iaConfig;
         currentStep = 1;
 
         SpawnInitialGeneration();
-
     }
 
     private void SpawnInitialGeneration()
@@ -58,10 +59,9 @@ public class GeneticEvolutionManager : MonoBehaviour
     public void SpawnNextGeneration()
     {
         currentStep++;
-        if(currentStep > config.maxSteps)
+        if(currentStep >= config.maxSteps)
         {
-            //TODO END
-            Debug.Log("FINISH GENETIC EVOLUTION");
+            OnFinish();
         }
         else
         {
@@ -70,8 +70,32 @@ public class GeneticEvolutionManager : MonoBehaviour
             g.CreateGenerationFromPrevious(currentGeneration);
             Destroy(currentGeneration.gameObject);
             currentGeneration = g;
-        }     
-        
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            currentStep = config.maxSteps;
+        }
+    }
+
+    public void OnFinish()
+    {
+        SaveConfigMenuController.Instance.Show(true);
+    }
+
+    public void EndGeneration(string fileName,bool save)
+    {
+        if (save)
+        {
+            SumobotIAConfiguration config = SumobotIAConfiguration.Copy(iaConfig);
+            config.weights = currentGeneration.GetBestFitnessEval().GetEvaluation();
+            ConfigurationManager.Instance.SaveConfig(fileName, config);            
+        }
+        CombatManager.Instance.Clear();
+        Destroy(currentGeneration.gameObject);
 
 
 

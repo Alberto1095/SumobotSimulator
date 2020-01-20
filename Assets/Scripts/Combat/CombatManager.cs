@@ -135,7 +135,7 @@ public class CombatManager : MonoBehaviour
         }
     }
 
-    private void Clear()
+    public void Clear()
     {
         if(combatControllers != null)
         {

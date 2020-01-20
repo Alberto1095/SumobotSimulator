@@ -105,7 +105,7 @@ public class Generation : MonoBehaviour
 
         foreach(Evaluation v in hijosEvaluation)
         {
-            v.Log();
+            //v.Log();
         }
 
         //Spawn new generation       
@@ -125,7 +125,7 @@ public class Generation : MonoBehaviour
         return f;
     }
 
-    private Evaluation GetBestFitnessEval()
+    public Evaluation GetBestFitnessEval()
     {
         Evaluation eval = null;
         int index = 0;
