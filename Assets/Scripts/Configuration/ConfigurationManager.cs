@@ -56,4 +56,30 @@ public class ConfigurationManager : MonoBehaviour
 
     }
 
+    public SumobotIAConfiguration GetConfigByName(string name)
+    {
+        SumobotIAConfiguration c = null;
+        foreach(ConfigTxtFile file in list)
+        {
+            if (file.fileName.Equals(name))
+            {
+                c = file.iaConfig;
+                break;
+            }
+        }
+
+        return c;
+    }
+
+    public List<string> GetFileNameList()
+    {
+        List<string> l = new List<string>();
+        foreach (ConfigTxtFile file in list)
+        {
+            l.Add(file.fileName);
+        }
+
+        return l;
+    }
+
 }

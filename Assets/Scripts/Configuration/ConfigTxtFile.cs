@@ -5,8 +5,8 @@ using System.IO;
 
 public class ConfigTxtFile 
 {
-    private string fileName;
-    private SumobotIAConfiguration iaConfig;
+    public string fileName;
+    public SumobotIAConfiguration iaConfig;
 
     public ConfigTxtFile(){
       
