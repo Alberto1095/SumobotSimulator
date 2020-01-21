@@ -105,7 +105,7 @@ public class Generation : MonoBehaviour
 
         foreach(Evaluation v in hijosEvaluation)
         {
-            //v.Log();
+            v.Log();
         }
 
         //Spawn new generation       
@@ -222,9 +222,11 @@ public class Generation : MonoBehaviour
                     
                     paramHijo1 = Mathf.Min(paramPadre2, paramPadre1) - alpha * distance;
                     paramHijo2 = Mathf.Max(paramPadre2, paramPadre1) + alpha * distance;
-                    
-                    hijo1Ev.AddValue(paramHijo1);
-                    hijo2Ev.AddValue(paramHijo2);
+
+                    float i1 = Random.Range(Mathf.Min(paramHijo1, paramHijo2), Mathf.Max(paramHijo1, paramHijo2));
+                    float i2 = Random.Range(Mathf.Min(paramHijo1, paramHijo2), Mathf.Max(paramHijo1, paramHijo2));
+                    hijo1Ev.AddValue(i1);
+                    hijo2Ev.AddValue(i2);
                 }
 
                 childsEvaluation.Add(hijo1Ev);
