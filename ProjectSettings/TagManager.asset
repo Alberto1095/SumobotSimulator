@@ -13,9 +13,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - Interior
+  - Exterior
+  - Robot
   - 
   - 
   - 
@@ -40,4 +40,16 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: CombatArea
+    uniqueID: 3151414905
+    locked: 0
+  - name: Robot
+    uniqueID: 487845127
+    locked: 0
+  - name: Rays
+    uniqueID: 528128299
+    locked: 0
+  - name: UI
+    uniqueID: 3676477501
     locked: 0
