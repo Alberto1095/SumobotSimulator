@@ -7,8 +7,8 @@ public abstract class RobotController : MonoBehaviour
     public Rigidbody2D rigidbody;
 
     public float maxSpeed;
-    public float steerging;
-    public float moveRotation;
+    public float steeringSpeed;
+    public float rotationSpeed;
     public float acceleration;
     protected float currentSpeed;
 
@@ -26,8 +26,10 @@ public abstract class RobotController : MonoBehaviour
 
     public virtual void SetConfig(SumobotConfiguration config)
     {
-        this.maxSpeed = config.moveSpeed;
-        this.steerging = config.rotationSpeed;      
+        this.maxSpeed = config.maxSpeed;
+        this.rotationSpeed = config.rotationSpeed;
+        this.steeringSpeed = config.steeringSpeed;
+        this.acceleration = config.acceleration;
     }   
 
     protected void Update()
@@ -75,11 +77,11 @@ public abstract class RobotController : MonoBehaviour
         {
             if (h == -1)
             {
-                rigidbody.MoveRotation(rigidbody.rotation - moveRotation*Time.fixedDeltaTime);
+                rigidbody.MoveRotation(rigidbody.rotation - rotationSpeed*Time.fixedDeltaTime);
             }
             else if(h == 1)
             {
-                rigidbody.MoveRotation(rigidbody.rotation + moveRotation * Time.fixedDeltaTime);
+                rigidbody.MoveRotation(rigidbody.rotation + rotationSpeed * Time.fixedDeltaTime);
             }  
            
         }
@@ -94,11 +96,11 @@ public abstract class RobotController : MonoBehaviour
             float direction = Vector2.Dot(rigidbody.velocity, rigidbody.GetRelativeVector(Vector2.up));
             if (direction >= 0.0f)
             {
-                rigidbody.rotation += h * steerging * (rigidbody.velocity.magnitude / maxSpeed);
+                rigidbody.rotation += h * steeringSpeed * (rigidbody.velocity.magnitude / maxSpeed);
             }
             else
             {
-                rigidbody.rotation -= h * steerging * (rigidbody.velocity.magnitude / maxSpeed);
+                rigidbody.rotation -= h * steeringSpeed * (rigidbody.velocity.magnitude / maxSpeed);
             }
 
             // Change velocity based on rotation
@@ -112,7 +114,7 @@ public abstract class RobotController : MonoBehaviour
                 rigidbody.velocity = rigidbody.velocity.normalized * maxSpeed;
             }
             currentSpeed = rigidbody.velocity.magnitude;
-            Debug.Log("SPEED: " + currentSpeed);
+            //Debug.Log("SPEED: " + currentSpeed);
         }
         
     }
@@ -125,8 +127,8 @@ public abstract class RobotController : MonoBehaviour
             //Debug.Log("COLISION EXIT RING: " + collision.gameObject.name);
             if (collision.gameObject.layer == LayerMask.NameToLayer("Exterior"))
             {
-                //SetEnable(false);
-                //listenner.OnDeath(this);
+                SetEnable(false);
+                listenner.OnDeath(this);
             }
         }
         

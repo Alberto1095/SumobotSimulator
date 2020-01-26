@@ -15,8 +15,10 @@ public class ConfigTxtFile
     public void SaveToFile(string path, SumobotIAConfiguration iaConfig)
     {
         string str = "";
-        str += iaConfig.moveSpeed + "\n";
+        str += iaConfig.maxSpeed + "\n";
         str += iaConfig.rotationSpeed + "\n";
+        str += iaConfig.steeringSpeed + "\n";
+        str += iaConfig.acceleration + "\n";
 
         str += iaConfig.lineSensorDistance + "\n";
         str += iaConfig.distanceSensorDistance + "\n";
@@ -66,26 +68,28 @@ public class ConfigTxtFile
 
         string[] lines = File.ReadAllLines(path);
 
-        iaConfig.moveSpeed = float.Parse(lines[0]);
+        iaConfig.maxSpeed = float.Parse(lines[0]);
         iaConfig.rotationSpeed = float.Parse(lines[1]);
+        iaConfig.steeringSpeed = float.Parse(lines[2]);
+        iaConfig.acceleration = float.Parse(lines[3]);
 
-        iaConfig.lineSensorDistance = float.Parse(lines[2]);
-        iaConfig.distanceSensorDistance = float.Parse(lines[3]);
+        iaConfig.lineSensorDistance = float.Parse(lines[4]);
+        iaConfig.distanceSensorDistance = float.Parse(lines[5]);
 
-        iaConfig.useFrontDistanceSensor = bool.Parse(lines[4]);
-        iaConfig.useLeftDistanceSensor = bool.Parse(lines[5]);
-        iaConfig.useRightDistanceSensor = bool.Parse(lines[6]);
+        iaConfig.useFrontDistanceSensor = bool.Parse(lines[6]);
+        iaConfig.useLeftDistanceSensor = bool.Parse(lines[7]);
+        iaConfig.useRightDistanceSensor = bool.Parse(lines[8]);
 
-        iaConfig.useBackLineSensor = bool.Parse(lines[7]);
-        iaConfig.useFrontLineSensor = bool.Parse(lines[8]);
-        iaConfig.useFrontLeftLineSensor = bool.Parse(lines[9]);
-        iaConfig.useFrontRightLineSensor = bool.Parse(lines[10]);
+        iaConfig.useBackLineSensor = bool.Parse(lines[9]);
+        iaConfig.useFrontLineSensor = bool.Parse(lines[10]);
+        iaConfig.useFrontLeftLineSensor = bool.Parse(lines[11]);
+        iaConfig.useFrontRightLineSensor = bool.Parse(lines[12]);
 
-        iaConfig.numLevels = int.Parse(lines[11]);
-        iaConfig.numInputs = int.Parse(lines[12]);
+        iaConfig.numLevels = int.Parse(lines[13]);
+        iaConfig.numInputs = int.Parse(lines[14]);
 
         List<int> numLayersPerLevel = new List<int>();        
-        string[] l = lines[13].Split('/');
+        string[] l = lines[15].Split('/');
         foreach (string c in l)
         {
             numLayersPerLevel.Add(int.Parse(c));
@@ -93,13 +97,13 @@ public class ConfigTxtFile
         iaConfig.numLayersPerLevel = numLayersPerLevel;
 
         ActivationFunctions func = new ActivationFunctions();
-        func.middleLayersFunction = (ActivationFunction)System.Enum.Parse(typeof(ActivationFunction),lines[14]);
-        func.finalLayerFunction = (ActivationFunction)System.Enum.Parse(typeof(ActivationFunction),lines[15]);
+        func.middleLayersFunction = (ActivationFunction)System.Enum.Parse(typeof(ActivationFunction),lines[16]);
+        func.finalLayerFunction = (ActivationFunction)System.Enum.Parse(typeof(ActivationFunction),lines[17]);
         iaConfig.functions = func;
         
-        if(lines.Length > 16)
+        if(lines.Length > 18)
         {
-            string str = lines[16];
+            string str = lines[18];
             List<float> weigthList = new List<float>();
             string[] wList = str.Split('/');
             foreach (string c in wList)

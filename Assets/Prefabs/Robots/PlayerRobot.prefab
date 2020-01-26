@@ -175,7 +175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 5857106085868696774}
   maxSpeed: 5
-  steerging: 5
-  moveRotation: 250
+  steeringSpeed: 5
+  rotationSpeed: 250
   acceleration: 50
   enable: 0

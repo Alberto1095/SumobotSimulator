@@ -181,8 +181,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 5857106085868696774}
-  moveSpeed: 3
-  rotationSpeed: 100
+  maxSpeed: 5
+  steeringSpeed: 5
+  rotationSpeed: 250
+  acceleration: 50
   enable: 0
   lineSensorDistance: 0.1
   distanceSensorDistance: 7

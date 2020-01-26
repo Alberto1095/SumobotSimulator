@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class SumobotConfiguration
 {
-    public float moveSpeed;
+    public float maxSpeed;
     public float rotationSpeed;
-    
+    public float steeringSpeed;  
+    public float acceleration;
 
     public SumobotConfiguration()
     {       
@@ -16,15 +17,19 @@ public class SumobotConfiguration
     public static SumobotConfiguration GetDefaultPlayerConfig()
     {
         SumobotConfiguration sc = new SumobotConfiguration();
-        sc.moveSpeed = 6;
-        sc.rotationSpeed = 200;        
+        sc.maxSpeed = 5;
+        sc.steeringSpeed = 5;
+        sc.acceleration = 50;
+        sc.rotationSpeed = 250;        
 
         return sc;
     }
 
-    public SumobotConfiguration(float moveSpeed, float rotationSpeed)
+    public SumobotConfiguration(float maxSpeed, float rotationSpeed, float steeringSpeed, float acceleration)
     {
-        this.moveSpeed = moveSpeed;
+        this.maxSpeed = maxSpeed;
         this.rotationSpeed = rotationSpeed;
+        this.steeringSpeed = steeringSpeed;
+        this.acceleration = acceleration;
     }
 }

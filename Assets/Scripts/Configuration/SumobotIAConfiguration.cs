@@ -39,10 +39,11 @@ public class SumobotIAConfiguration: SumobotConfiguration
 
     }
 
-    public SumobotIAConfiguration(float moveSpeed, float rotationSpeed,float lineSensorDistance, float distanceSensorDistance, bool useFrontDistanceSensor, 
+    public SumobotIAConfiguration(float maxSpeed, float rotationSpeed, float steeringSpeed, float acceleration,
+        float lineSensorDistance, float distanceSensorDistance, bool useFrontDistanceSensor, 
         bool useLeftDistanceSensor, bool useRightDistanceSensor, bool useFrontRightLineSensor, 
         bool useFrontLeftLineSensor, bool useFrontLineSensor, bool useBackLineSensor, int numLevels, 
-        int numInputs, List<int> numLayersPerLevel, ActivationFunctions functions, List<float> weights):base(moveSpeed,rotationSpeed)
+        int numInputs, List<int> numLayersPerLevel, ActivationFunctions functions, List<float> weights):base(maxSpeed,rotationSpeed,steeringSpeed,acceleration)
     {
         
         this.lineSensorDistance = lineSensorDistance;
@@ -64,8 +65,10 @@ public class SumobotIAConfiguration: SumobotConfiguration
     public static SumobotIAConfiguration GetDefaultIAConfig()
     {
         SumobotIAConfiguration sc = new SumobotIAConfiguration();
-        sc.moveSpeed = 6;
-        sc.rotationSpeed = 200;
+        sc.maxSpeed = 5;
+        sc.rotationSpeed = 250;
+        sc.acceleration = 50;
+        sc.steeringSpeed = 5;
         sc.lineSensorDistance = 0.1f;
         sc.distanceSensorDistance = 7;
 
@@ -90,8 +93,10 @@ public class SumobotIAConfiguration: SumobotConfiguration
     public static SumobotIAConfiguration Copy(SumobotIAConfiguration c)
     {
         SumobotIAConfiguration config = new SumobotIAConfiguration();
-        config.moveSpeed = c.moveSpeed;
+        config.maxSpeed = c.maxSpeed;
         config.rotationSpeed = c.rotationSpeed;
+        config.steeringSpeed = c.steeringSpeed;
+        config.acceleration = c.acceleration;
 
         config.lineSensorDistance = c.lineSensorDistance;
         config.distanceSensorDistance = c.distanceSensorDistance;

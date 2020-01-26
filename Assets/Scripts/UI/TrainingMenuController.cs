@@ -22,6 +22,8 @@ public class TrainingMenuController : MonoBehaviour
     //Sumobot config
     public InputField inputMoveSpeed;
     public InputField inputRotationSpeed;
+    public InputField inputSteeringSpeed;
+    public InputField inputAcceleration;
     public InputField inputLineSensorDistance;
     public InputField inputDistanceSensorDistance;
     public Toggle inputUseFrontDistanceSensor;
@@ -90,8 +92,10 @@ public class TrainingMenuController : MonoBehaviour
     {
         SumobotIAConfiguration config = new SumobotIAConfiguration();
 
-        config.moveSpeed = float.Parse(inputMoveSpeed.text);
+        config.maxSpeed = float.Parse(inputMoveSpeed.text);
         config.rotationSpeed = float.Parse(inputRotationSpeed.text);
+        config.steeringSpeed = float.Parse(inputSteeringSpeed.text);
+        config.acceleration = float.Parse(inputAcceleration.text);
         config.lineSensorDistance = float.Parse(inputLineSensorDistance.text);
         config.distanceSensorDistance = float.Parse(inputDistanceSensorDistance.text);
         config.useFrontDistanceSensor = inputUseFrontDistanceSensor.isOn;
