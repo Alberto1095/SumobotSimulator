@@ -127,26 +127,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1289878324493926539, guid: 1da542df41ac79742883689dde97bcf9,
-        type: 3}
-      propertyPath: acceleration
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 1289878324493926539, guid: 1da542df41ac79742883689dde97bcf9,
-        type: 3}
-      propertyPath: maxSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1289878324493926539, guid: 1da542df41ac79742883689dde97bcf9,
-        type: 3}
-      propertyPath: rotationSpeed
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1289878324493926539, guid: 1da542df41ac79742883689dde97bcf9,
-        type: 3}
-      propertyPath: enable
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5532687471568999390, guid: 1da542df41ac79742883689dde97bcf9,
         type: 3}
       propertyPath: m_LocalPosition.x

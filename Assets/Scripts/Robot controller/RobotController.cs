@@ -7,7 +7,8 @@ public abstract class RobotController : MonoBehaviour
     public Rigidbody2D rigidbody;
 
     public float maxSpeed;
-    public float rotationSpeed;
+    public float steerging;
+    public float moveRotation;
     public float acceleration;
     protected float currentSpeed;
 
@@ -26,7 +27,7 @@ public abstract class RobotController : MonoBehaviour
     public virtual void SetConfig(SumobotConfiguration config)
     {
         this.maxSpeed = config.moveSpeed;
-        this.rotationSpeed = config.rotationSpeed;      
+        this.steerging = config.rotationSpeed;      
     }   
 
     protected void Update()
@@ -72,8 +73,15 @@ public abstract class RobotController : MonoBehaviour
                
         if(v == 0)
         {
-            //Rotate only
-
+            if (h == -1)
+            {
+                rigidbody.MoveRotation(rigidbody.rotation - moveRotation*Time.fixedDeltaTime);
+            }
+            else if(h == 1)
+            {
+                rigidbody.MoveRotation(rigidbody.rotation + moveRotation * Time.fixedDeltaTime);
+            }  
+           
         }
         else
         {
@@ -86,11 +94,11 @@ public abstract class RobotController : MonoBehaviour
             float direction = Vector2.Dot(rigidbody.velocity, rigidbody.GetRelativeVector(Vector2.up));
             if (direction >= 0.0f)
             {
-                rigidbody.rotation += h * rotationSpeed * (rigidbody.velocity.magnitude / maxSpeed);
+                rigidbody.rotation += h * steerging * (rigidbody.velocity.magnitude / maxSpeed);
             }
             else
             {
-                rigidbody.rotation -= h * rotationSpeed * (rigidbody.velocity.magnitude / maxSpeed);
+                rigidbody.rotation -= h * steerging * (rigidbody.velocity.magnitude / maxSpeed);
             }
 
             // Change velocity based on rotation
