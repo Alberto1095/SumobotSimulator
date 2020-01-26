@@ -36,7 +36,7 @@ public class Generation : MonoBehaviour
         if (end)
         {
             started = false;
-            
+            UpdateBestFitness();
             GeneticEvolutionManager.Instance.SpawnNextGeneration();
         }
     }
@@ -110,7 +110,7 @@ public class Generation : MonoBehaviour
         }
         */
         //Spawn new generation       
-        CombatManager.Instance.SpawnGeneration(hijosEvaluation,configSumobot,config,bestEval);
+        CombatManager.Instance.SpawnGeneration(hijosEvaluation,configSumobot,config,GeneticEvolutionManager.Instance.bestEvaluation);
         SetRobotList();
         started = true;
     }
@@ -145,6 +145,31 @@ public class Generation : MonoBehaviour
         Debug.Log("BEST FITNESS: " + best);
         return eval;
     }
+
+    private void UpdateBestFitness()
+    {
+        Evaluation eval = null;
+        int index = 0;
+        int bestIndex = 0;
+        float best = 0;
+        foreach (RobotIAController r in robotList)
+        {
+            if (r.GetFitness() >= best)
+            {
+                best = r.GetFitness();
+                eval = r.GetEvaluation();
+                bestIndex = index;
+            }
+            index++;
+        }
+       
+        if(best > GeneticEvolutionManager.Instance.bestFitness)
+        {
+            GeneticEvolutionManager.Instance.bestFitness = best;
+            GeneticEvolutionManager.Instance.bestEvaluation = eval;
+        }
+    }
+    
 
     public List<Evaluation> GetEvaluationList()
     {

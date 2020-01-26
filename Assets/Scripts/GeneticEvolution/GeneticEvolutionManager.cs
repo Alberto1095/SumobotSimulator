@@ -12,6 +12,9 @@ public class GeneticEvolutionManager : MonoBehaviour
     public GameObject generationPrefab;
     private Generation currentGeneration;
 
+    public Evaluation bestEvaluation;
+    public float bestFitness;
+
     private int currentStep;
     private bool started = false;
 
@@ -21,7 +24,9 @@ public class GeneticEvolutionManager : MonoBehaviour
 
         // If there is not already an instance of SoundManager, set it to this.
         if (Instance == null)
-        {           
+        {
+            bestFitness = -1;
+            bestEvaluation = null;
             Instance = this;
         }
         //If an instance already exists, destroy whatever this object is to enforce the singleton.
@@ -98,8 +103,5 @@ public class GeneticEvolutionManager : MonoBehaviour
         }
         CombatManager.Instance.Clear();
         Destroy(currentGeneration.gameObject);
-
-
-
     }
 }
