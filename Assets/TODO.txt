@@ -1,3 +1,2 @@
-- Comprobar funcionamiento red neuronal con diferentes funciones
-- COmprobar functionamiento creacion generacion
-- Print evaluation al generar neuva generacion y ver si convergen
+- Guardar best fitnes hasta la fecha y luchar siempre contra el
+-Añadir fitnes tiempo vida

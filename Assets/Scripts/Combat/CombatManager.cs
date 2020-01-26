@@ -33,50 +33,11 @@ public class CombatManager : MonoBehaviour
 
         //Dont destroy on load
         DontDestroyOnLoad(gameObject);
-    }
+    }  
+
    
 
-    public CombatController CreatePlayerVsIACombat(Vector3 position,SumobotConfiguration sumobotConfig, SumobotIAConfiguration iaConfig)
-    {
-        GameObject go = Instantiate(combatAreaPrefab, position, Quaternion.identity,transform);
-        
-        GameObject r1 = Instantiate(sumobotPlayerPrefab, go.transform);
-        RobotController rc1 = r1.GetComponent<RobotController>();
-        rc1.SetConfig(sumobotConfig);
-
-        GameObject r2 = Instantiate(sumobotIAPrefab, go.transform);
-        RobotController rc2 = r2.GetComponent<RobotController>();
-        RobotIAController ia = (RobotIAController)rc2;
-        ia.SetConfig(iaConfig);
-      
-
-        CombatController controller = go.GetComponent<CombatController>();
-        controller.StartMatch(rc1, rc2);
-
-        return controller;
-    }
-
-    public CombatController CreateIAvsIACombat(Vector3 position, SumobotIAConfiguration iaConfig1, SumobotIAConfiguration iaConfig2)
-    {
-        GameObject go = Instantiate(combatAreaPrefab, position, Quaternion.identity,transform);
-
-        GameObject r1 = Instantiate(sumobotIAPrefab, go.transform);
-        RobotController rc1 = r1.GetComponent<RobotController>();
-        RobotIAController ia1 = (RobotIAController)rc1;
-        ia1.SetConfig(iaConfig1);
-
-        GameObject r2 = Instantiate(sumobotIAPrefab, go.transform);
-        RobotController rc2 = r2.GetComponent<RobotController>();
-        RobotIAController ia2 = (RobotIAController)rc2;
-        ia2.SetConfig(iaConfig2);
-
-        CombatController controller = go.GetComponent<CombatController>();
-        controller.StartMatch(rc1, rc2);
-
-        return controller;
-    }
-
-    public void SpawnGeneration(List<Evaluation> list, SumobotIAConfiguration configSumobot, GeneticEvolutionConfiguration config)
+    public void SpawnGeneration(List<Evaluation> list, SumobotIAConfiguration configSumobot, GeneticEvolutionConfiguration config,Evaluation bestEval)
     {
         Clear();
         int startX = 0;
@@ -87,7 +48,7 @@ public class CombatManager : MonoBehaviour
         Vector3 pos;
         int count = config.population;
         SumobotIAConfiguration c1, c2;
-        for (int i = 0; i < count; i += 2)
+        for (int i = 0; i < count; i++)
         {
             pos = new Vector3(startX, startY, 0);
             startX += offset;
@@ -101,7 +62,7 @@ public class CombatManager : MonoBehaviour
             c1 = SumobotIAConfiguration.Copy(configSumobot);
             c1.weights = list[i].GetEvaluation();
             c2 = SumobotIAConfiguration.Copy(configSumobot);
-            c2.weights = list[i + 1].GetEvaluation();
+            c2.weights = new List<float>(bestEval.GetEvaluation());
 
             CombatController match = CreateIAvsIACombat(pos, c1, c2);
             combatControllers.Add(match);
@@ -117,7 +78,7 @@ public class CombatManager : MonoBehaviour
         int maxRow = 6;
         int rowCount = 0;
         Vector3 pos;
-        int count  = config.population / 2;       
+        int count = config.population;  
        
         for (int i = 0; i < count; i++)
         {
@@ -147,6 +108,46 @@ public class CombatManager : MonoBehaviour
 
         combatControllers = new List<CombatController>();
         
+    }
+
+    public CombatController CreatePlayerVsIACombat(Vector3 position, SumobotConfiguration sumobotConfig, SumobotIAConfiguration iaConfig)
+    {
+        GameObject go = Instantiate(combatAreaPrefab, position, Quaternion.identity, transform);
+
+        GameObject r1 = Instantiate(sumobotPlayerPrefab, go.transform);
+        RobotController rc1 = r1.GetComponent<RobotController>();
+        rc1.SetConfig(sumobotConfig);
+
+        GameObject r2 = Instantiate(sumobotIAPrefab, go.transform);
+        RobotController rc2 = r2.GetComponent<RobotController>();
+        RobotIAController ia = (RobotIAController)rc2;
+        ia.SetConfig(iaConfig);
+
+
+        CombatController controller = go.GetComponent<CombatController>();
+        controller.StartMatch(rc1, rc2);
+
+        return controller;
+    }
+
+    public CombatController CreateIAvsIACombat(Vector3 position, SumobotIAConfiguration iaConfig1, SumobotIAConfiguration iaConfig2)
+    {
+        GameObject go = Instantiate(combatAreaPrefab, position, Quaternion.identity, transform);
+
+        GameObject r1 = Instantiate(sumobotIAPrefab, go.transform);
+        RobotController rc1 = r1.GetComponent<RobotController>();
+        RobotIAController ia1 = (RobotIAController)rc1;
+        ia1.SetConfig(iaConfig1);
+
+        GameObject r2 = Instantiate(sumobotIAPrefab, go.transform);
+        RobotController rc2 = r2.GetComponent<RobotController>();
+        RobotIAController ia2 = (RobotIAController)rc2;
+        ia2.SetConfig(iaConfig2);
+
+        CombatController controller = go.GetComponent<CombatController>();
+        controller.StartMatch(rc1, rc2);
+
+        return controller;
     }
 
 

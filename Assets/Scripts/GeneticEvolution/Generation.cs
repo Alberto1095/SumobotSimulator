@@ -47,7 +47,8 @@ public class Generation : MonoBehaviour
         foreach (CombatController c in CombatManager.Instance.combatControllers)
         {
             robotList.Add(c.robotA as RobotIAController);
-            robotList.Add(c.robotB as RobotIAController);
+            //Robot B is best oponent from previous generation so we dont add to list
+            //robotList.Add(c.robotB as RobotIAController);
         }
     }
 
@@ -109,7 +110,7 @@ public class Generation : MonoBehaviour
         }
         */
         //Spawn new generation       
-        CombatManager.Instance.SpawnGeneration(hijosEvaluation,configSumobot,config);
+        CombatManager.Instance.SpawnGeneration(hijosEvaluation,configSumobot,config,bestEval);
         SetRobotList();
         started = true;
     }
