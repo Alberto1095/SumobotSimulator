@@ -6,11 +6,12 @@ public abstract class RobotController : MonoBehaviour
 {
     public Rigidbody2D rigidbody;
 
-    public float moveSpeed;
-    public float rotationSpeed;  
+    public float maxSpeed;
+    public float rotationSpeed;
+    public float acceleration;
+    protected float currentSpeed;
 
-    public enum RobotDirection { Up, Down, Left, Right,Stop };
-    protected RobotDirection currentDirection;   
+    protected float xDirection, yDirection;
    
     public bool enable;
     
@@ -18,12 +19,13 @@ public abstract class RobotController : MonoBehaviour
 
     protected virtual void Awake()
     {
-        currentDirection = RobotDirection.Stop;      
+        xDirection = 0;
+        yDirection = 0;
     }    
 
     public virtual void SetConfig(SumobotConfiguration config)
     {
-        this.moveSpeed = config.moveSpeed;
+        this.maxSpeed = config.moveSpeed;
         this.rotationSpeed = config.rotationSpeed;      
     }   
 
@@ -65,32 +67,48 @@ public abstract class RobotController : MonoBehaviour
 
     private void Move()
     {
-        switch (currentDirection)
+        float h = -xDirection;
+        float v = yDirection;
+               
+        if(v == 0)
         {
-            case RobotDirection.Up:                
-                rigidbody.MovePosition(rigidbody.position + 
-                    GetCurrentVelocity() * moveSpeed * Time.fixedDeltaTime);
-                break;
-            case RobotDirection.Down:
-                rigidbody.MovePosition(rigidbody.position +
-                   -1*GetCurrentVelocity() * moveSpeed * Time.fixedDeltaTime);
-                break;
-            case RobotDirection.Left:
-                rigidbody.MoveRotation(rigidbody.rotation + rotationSpeed * Time.fixedDeltaTime);
-                break;
-            case RobotDirection.Right:
-                rigidbody.MoveRotation(rigidbody.rotation -rotationSpeed * Time.fixedDeltaTime);
-                break;
-            case RobotDirection.Stop:
-                break;
-        }       
-    }
+            //Rotate only
 
-    protected Vector2 GetCurrentVelocity()
-    {
-        Vector2 forwardVector = new Vector2(transform.up.x, transform.up.y);        
-        return forwardVector;
-    } 
+        }
+        else
+        {
+            // Calculate speed from input and acceleration (transform.up is forward)
+            Vector2 speed = transform.up * (v * acceleration);
+            rigidbody.AddForce(speed);
+
+
+            // Create car rotation
+            float direction = Vector2.Dot(rigidbody.velocity, rigidbody.GetRelativeVector(Vector2.up));
+            if (direction >= 0.0f)
+            {
+                rigidbody.rotation += h * rotationSpeed * (rigidbody.velocity.magnitude / maxSpeed);
+            }
+            else
+            {
+                rigidbody.rotation -= h * rotationSpeed * (rigidbody.velocity.magnitude / maxSpeed);
+            }
+
+            // Change velocity based on rotation
+            float driftForce = Vector2.Dot(rigidbody.velocity, rigidbody.GetRelativeVector(Vector2.left)) * 2.0f;
+            Vector2 relativeForce = Vector2.right * driftForce;
+            rigidbody.AddForce(rigidbody.GetRelativeVector(relativeForce));
+
+            // Force max speed limit
+            if (rigidbody.velocity.magnitude > maxSpeed)
+            {
+                rigidbody.velocity = rigidbody.velocity.normalized * maxSpeed;
+            }
+            currentSpeed = rigidbody.velocity.magnitude;
+            Debug.Log("SPEED: " + currentSpeed);
+        }
+        
+    }
+   
 
     protected void OnTriggerExit2D(Collider2D collision)
     {
@@ -99,8 +117,8 @@ public abstract class RobotController : MonoBehaviour
             //Debug.Log("COLISION EXIT RING: " + collision.gameObject.name);
             if (collision.gameObject.layer == LayerMask.NameToLayer("Exterior"))
             {
-                SetEnable(false);
-                listenner.OnDeath(this);
+                //SetEnable(false);
+                //listenner.OnDeath(this);
             }
         }
         

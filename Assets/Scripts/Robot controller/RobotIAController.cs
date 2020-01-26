@@ -107,65 +107,37 @@ public class RobotIAController : RobotController,IADrivenObject
     public void ExecuteIA()
     {
 
-        if(neuralNetwork != null)
+        if (neuralNetwork != null)
         {
             float[] inputs = GetInputs();
             float[] outputs = neuralNetwork.CalculateOutput(inputs);
-            float minThreshold = 0.4f;
-            int outputSelected;
-            //Decide which direction move
-            //Select one random from the ones with output higher than minimun threshold
-            /*
-            List<int> list = new List<int>();
 
-            for (int i = 0; i < outputs.Length; i++)
-            {
-                if (outputs[i] >= minThreshold)
-                {
-                    list.Add(i);
-                }
-            }
+            float yOutput = outputs[0]*2 -1;
+            float xOutput = outputs[1]*2 -1;
 
-           
-            int randomIndex;
-            if (list.Count > 0)
+            if(yOutput > 0.33)
             {
-                randomIndex = Random.Range(0, list.Count);
-                outputSelected = list[randomIndex];
+                yDirection = 1;
+            }else if(yOutput < -0.33)
+            {
+                yDirection = -1;
             }
             else
             {
-                outputSelected = Random.Range(0, outputs.Length);                
-            }     
-            */
-            float bestOutput = outputs[0];
-            outputSelected = 0;
-            for(int i = 0;i<outputs.Length;i++)
-            {
-                if(outputs[i] > bestOutput)
-                {
-                    bestOutput = outputs[i];
-                    outputSelected = i;
-                }
+                yDirection = 0;
             }
 
-            switch (outputSelected)
+            if (xOutput > 0.33)
             {
-                case 0:
-                    currentDirection = RobotDirection.Up;                   
-                    break;
-                case 1:
-                    currentDirection = RobotDirection.Down;                    
-                    break;
-                case 2:
-                    currentDirection = RobotDirection.Right;                  
-                    break;
-                case 3:
-                    currentDirection = RobotDirection.Left;                   
-                    break;
-                case 4:
-                    currentDirection = RobotDirection.Stop;                   
-                    break;
+                xDirection = 1;
+            }
+            else if (xOutput < -0.33)
+            {
+                xDirection = -1;
+            }
+            else
+            {
+                xDirection = 0;
             }
         }
         

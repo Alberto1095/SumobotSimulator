@@ -14,23 +14,28 @@ public class RobotPlayerController : RobotController
     {
         if (Input.GetKey(KeyCode.W))
         {
-            currentDirection = RobotDirection.Up;
+            yDirection = 1;
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            currentDirection = RobotDirection.Down;
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            currentDirection = RobotDirection.Left;
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            currentDirection = RobotDirection.Right;
+            yDirection = -1;
         }
         else
         {
-            currentDirection = RobotDirection.Stop;
+            yDirection = 0;
+        }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            xDirection = -1;
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            xDirection = 1;
+        }
+        else
+        {
+            xDirection = 0;
         }
     }
 
