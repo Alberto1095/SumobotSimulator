@@ -53,11 +53,11 @@ public class Generation : MonoBehaviour
     }
 
 
-    public void CreateInitialGeneration(GeneticEvolutionConfiguration config1, SumobotIAConfiguration config2)
+    public void CreateInitialGeneration(GeneticEvolutionConfiguration geneticConfig, SumobotIAConfiguration iaConfig)
     {      
-        this.config = config1;
-        this.configSumobot = config2;        
-        CombatManager.Instance.SpawnRandomGeneration(config2,config);
+        this.config = geneticConfig;
+        this.configSumobot = iaConfig;        
+        CombatManager.Instance.SpawnRandomGeneration(iaConfig, geneticConfig);
         SetRobotList();
         started = true;
     }
