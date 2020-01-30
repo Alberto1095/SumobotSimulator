@@ -33,13 +33,27 @@ public class SelectIAMenuController : MonoBehaviour
 
     public void Start()
     {
+        UpdateButtonList();
+    }
+
+    public void UpdateButtonList()
+    {
+        ClearButtons();
         List<string> files = ConfigurationManager.Instance.GetFileNameList();
 
-        foreach(string str in files)
+        foreach (string str in files)
         {
             AddButton(str);
         }
+    }
 
+    private void ClearButtons()
+    {
+        int count = contentPanel.transform.childCount;
+        for (int i = 0; i < count; i++)
+        {
+            Destroy(contentPanel.transform.GetChild(i).gameObject);
+        }
     }
 
     private void AddButton(string name)

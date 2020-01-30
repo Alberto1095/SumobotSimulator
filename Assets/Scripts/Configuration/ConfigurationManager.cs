@@ -34,7 +34,8 @@ public class ConfigurationManager : MonoBehaviour
         ConfigTxtFile txt = new ConfigTxtFile();
         string path = Application.dataPath + FOLDER_PATH + name+".txt";
         txt.SaveToFile(path, config);
-        list.Add(txt);       
+        ReadSavedFiles();
+        SelectIAMenuController.Instance.UpdateButtonList();
     }
 
 

@@ -82,14 +82,19 @@ public class GeneticEvolutionManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (started)
         {
-            currentStep = config.maxSteps;
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                currentStep = config.maxSteps;
+            }
         }
+       
     }
 
     public void OnFinish()
     {
+        started = false;
         SaveConfigMenuController.Instance.Show(true);
     }
 

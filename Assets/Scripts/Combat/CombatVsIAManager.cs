@@ -8,6 +8,8 @@ public class CombatVsIAManager : MonoBehaviour
     private CombatController currentCombat;
     public static CombatVsIAManager Instance = null;
 
+    private bool started;
+
     // Initialize the singleton instance.
     private void Awake()
     {
@@ -15,7 +17,7 @@ public class CombatVsIAManager : MonoBehaviour
         // If there is not already an instance of SoundManager, set it to this.
         if (Instance == null)
         {
-
+            started = false;
             Instance = this;
         }
         //If an instance already exists, destroy whatever this object is to enforce the singleton.
@@ -31,10 +33,18 @@ public class CombatVsIAManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (started)
         {
-            ResetMatch();
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                ResetMatch();
+            }
+            else if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                EndMatch();
+            }
         }
+        
     }
 
     public void StartMatch(string name)
@@ -42,6 +52,7 @@ public class CombatVsIAManager : MonoBehaviour
         currentConfig = ConfigurationManager.Instance.GetConfigByName(name);
         currentCombat = CombatManager.Instance.CreatePlayerVsIACombat(new Vector3(0, 0, 0), SumobotIAConfiguration.Copy(currentConfig), 
             SumobotIAConfiguration.Copy(currentConfig));
+        started = true;
     }
 
     private void ResetMatch()
@@ -53,5 +64,15 @@ public class CombatVsIAManager : MonoBehaviour
 
         currentCombat = CombatManager.Instance.CreatePlayerVsIACombat(new Vector3(0, 0, 0), SumobotIAConfiguration.Copy(currentConfig),
             SumobotIAConfiguration.Copy(currentConfig));
+    }
+
+    private void EndMatch()
+    {
+        if (currentCombat != null)
+        {
+            Destroy(currentCombat.gameObject);
+        }
+        StartingMenuController.Instance.Show(true);
+        started = false;
     }
 }
