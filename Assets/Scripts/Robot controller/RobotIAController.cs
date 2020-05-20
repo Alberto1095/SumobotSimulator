@@ -32,10 +32,14 @@ public class RobotIAController : RobotController,IADrivenObject
     public float winWeight;
     protected int enemyColisions;
     public float enemyCollisionsWeight;
+    public float timeWeight;
+    private float startTime;
+    private float endTime;
 
     protected NeuralNetwork neuralNetwork;
     protected float lastUpdateTime;
-    public float updateWaitTime;   
+    public float updateWaitTime;
+   
 
     protected override void Awake()
     {
@@ -69,6 +73,16 @@ public class RobotIAController : RobotController,IADrivenObject
             neuralNetwork = new NeuralNetwork(iaConfig);
         }
        
+    }
+
+    public override void SetEnable(bool b)
+    {       
+        base.SetEnable(b);
+        if (b)
+        {
+            startTime = Time.time;
+        }
+        
     }
 
     private void SetSensorValues( )
@@ -184,6 +198,7 @@ public class RobotIAController : RobotController,IADrivenObject
         return list;
     }
 
+   
     public Evaluation GetEvaluation()
     {
         return new Evaluation(neuralNetwork.GetWeights());
@@ -191,11 +206,14 @@ public class RobotIAController : RobotController,IADrivenObject
 
     public float GetFitness()
     {
-        return win * winWeight + enemyCollisionsWeight * enemyColisions;
+        float time = (endTime - startTime);
+        //Debug.Log("TIME: " + startTime+" - "+endTime+" - "+time);
+        return win * winWeight + enemyCollisionsWeight * enemyColisions+time*timeWeight;
     }
 
     public override void SetWin(bool b)
     {
+        endTime = Time.time;
         if (b)
         {
             win = 1;

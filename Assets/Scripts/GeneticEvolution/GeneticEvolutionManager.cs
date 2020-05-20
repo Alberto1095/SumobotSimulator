@@ -84,7 +84,7 @@ public class GeneticEvolutionManager : MonoBehaviour
     {
         if (started)
         {
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
                 currentStep = config.maxSteps;
             }

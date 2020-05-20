@@ -203,8 +203,9 @@ MonoBehaviour:
   leftDistanseSensor: {fileID: 6126553293528501782}
   rightDistanseSensor: {fileID: 1683981601075722168}
   useDebugLines: 1
-  winWeight: 2
+  winWeight: 10
   enemyCollisionsWeight: 5
+  timeWeight: 1
   updateWaitTime: 0.1
 --- !u!1001 &1326571972013392311
 PrefabInstance:

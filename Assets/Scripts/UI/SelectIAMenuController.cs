@@ -11,6 +11,8 @@ public class SelectIAMenuController : MonoBehaviour
 
     public static SelectIAMenuController Instance = null;
 
+    private bool testMode;
+
     // Initialize the singleton instance.
     private void Awake()
     {
@@ -62,11 +64,17 @@ public class SelectIAMenuController : MonoBehaviour
         newButton.transform.SetParent(contentPanel.transform, false);
 
         Button b = newButton.GetComponent<Button>();
-        b.onClick.AddListener(() => OnStartMatchPressed(name));
+        b.onClick.AddListener(() => OnButtonPressed(name));
 
         Text t = newButton.transform.GetChild(0).GetComponent<Text>();
         t.text = name;
         
+    }
+
+    public void Show(bool b,bool testMode)
+    {
+        this.testMode = testMode;
+        panel.SetActive(b);
     }
 
     public void Show(bool b)
@@ -74,11 +82,18 @@ public class SelectIAMenuController : MonoBehaviour
         panel.SetActive(b);
     }
 
-    public void OnStartMatchPressed(string name)
+    public void OnButtonPressed(string name)
     {
         Show(false);
+        if (testMode)
+        {
+            TestIAMenuController.Instance.Show(true,name);
+        }
+        else
+        {
+            CombatVsIAManager.Instance.StartMatch(name);
+        }
         
-        CombatVsIAManager.Instance.StartMatch(name);
     }
 
 }

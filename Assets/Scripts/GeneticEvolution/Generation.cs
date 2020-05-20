@@ -66,10 +66,10 @@ public class Generation : MonoBehaviour
     {   
         this.config = bg.config;
         this.configSumobot = bg.configSumobot;         
-        //Get best fitness eval of previous generation		
+        //Obtener fitness de cada individuo	
         Evaluation bestEval = bg.GetBestFitnessEval();        
 
-        //Selection
+        //Seleccion
         int[] indexParents = null;
         switch (config.selectionFunction)
         {

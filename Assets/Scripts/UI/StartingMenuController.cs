@@ -42,6 +42,12 @@ public class StartingMenuController : MonoBehaviour
     public void OnCombatButtonPressed()
     {
         Show(false);
-        SelectIAMenuController.Instance.Show(true);
+        SelectIAMenuController.Instance.Show(true,false);
+    }
+
+    public void OnTestIAButtonPressed()
+    {
+        Show(false);
+        SelectIAMenuController.Instance.Show(true,true);
     }
 }

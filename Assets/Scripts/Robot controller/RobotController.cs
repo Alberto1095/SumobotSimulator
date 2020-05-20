@@ -5,13 +5,16 @@ using UnityEngine;
 public abstract class RobotController : MonoBehaviour
 {
     public Rigidbody2D rigidbody;
-
+    //Maxima velocidad
     public float maxSpeed;
+    //Velocidad rotation con movimiento
     public float steeringSpeed;
+    //Velocidad rotation
     public float rotationSpeed;
+    //Aceleracion
     public float acceleration;
     protected float currentSpeed;
-
+    //Direcciones actuales
     protected float xDirection, yDirection;
    
     public bool enable;
@@ -56,7 +59,7 @@ public abstract class RobotController : MonoBehaviour
         }              
     }
 
-    public void SetEnable(bool b)
+    public virtual void SetEnable(bool b)
     {
         enable = b;
         if (!enable)
@@ -74,25 +77,27 @@ public abstract class RobotController : MonoBehaviour
         float v = yDirection;
                
         if(v == 0)
-        {
+        {            
             if (h == -1)
             {
+                //Rotacion izquierda
                 rigidbody.MoveRotation(rigidbody.rotation - rotationSpeed*Time.fixedDeltaTime);
             }
             else if(h == 1)
             {
+                //Rotacion derecha
                 rigidbody.MoveRotation(rigidbody.rotation + rotationSpeed * Time.fixedDeltaTime);
             }  
            
         }
         else
         {
-            // Calculate speed from input and acceleration (transform.up is forward)
+            //Movimiento con rotation al mismo tiempo
+            // Calculo velocidad frontal en funcion de la aceleracion
             Vector2 speed = transform.up * (v * acceleration);
             rigidbody.AddForce(speed);
 
-
-            // Create car rotation
+            //Calculo de la rotacion
             float direction = Vector2.Dot(rigidbody.velocity, rigidbody.GetRelativeVector(Vector2.up));
             if (direction >= 0.0f)
             {
@@ -103,20 +108,18 @@ public abstract class RobotController : MonoBehaviour
                 rigidbody.rotation -= h * steeringSpeed * (rigidbody.velocity.magnitude / maxSpeed);
             }
 
-            // Change velocity based on rotation
+            //Cambio de direccion en funcion de la rotacion del movimiento
             float driftForce = Vector2.Dot(rigidbody.velocity, rigidbody.GetRelativeVector(Vector2.left)) * 2.0f;
             Vector2 relativeForce = Vector2.right * driftForce;
             rigidbody.AddForce(rigidbody.GetRelativeVector(relativeForce));
 
-            // Force max speed limit
+            //Controbacion de que no se pasa la velocidad maxima
             if (rigidbody.velocity.magnitude > maxSpeed)
             {
                 rigidbody.velocity = rigidbody.velocity.normalized * maxSpeed;
             }
-            currentSpeed = rigidbody.velocity.magnitude;
-            //Debug.Log("SPEED: " + currentSpeed);
-        }
-        
+            currentSpeed = rigidbody.velocity.magnitude;            
+        }        
     }
    
 
